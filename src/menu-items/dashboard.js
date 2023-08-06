@@ -1,22 +1,30 @@
 // assets
-import { IconDashboard } from '@tabler/icons';
+import { IconDashboard, IconClipboard } from '@tabler/icons';
 
 // constant
-const icons = { IconDashboard };
+const icons = { IconDashboard, IconClipboard };
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const dashboard = {
   id: 'dashboard',
-  title: 'Dashboard',
+  title: 'Gerenciamento',
   type: 'group',
   children: [
     {
       id: 'default',
       title: 'Dashboard',
       type: 'item',
-      url: '/dashboard/default',
+      url: '/dashboard',
       icon: icons.IconDashboard,
+      breadcrumbs: false
+    },
+    {
+      id: 'frequency',
+      title: 'Frequência',
+      type: 'item',
+      url: '/frequency',
+      icon: icons.IconClipboard,
       breadcrumbs: false
     }
   ]

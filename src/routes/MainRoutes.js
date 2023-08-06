@@ -6,6 +6,7 @@ import Loadable from 'ui-component/Loadable';
 
 // dashboard routing
 const DashboardDefault = Loadable(lazy(() => import('views/dashboard/Default')));
+const Frequency = Loadable(lazy(() => import('views/dashboard/frequency')));
 
 // utilities routing
 const UtilsTypography = Loadable(lazy(() => import('views/utilities/Typography')));
@@ -26,13 +27,18 @@ const MainRoutes = {
     {
       path: '/',
       element: <DashboardDefault />
+      //redirect
     },
     {
-      path: 'dashboard',
+      path: '/',
       children: [
         {
-          path: 'default',
+          path: 'dashboard',
           element: <DashboardDefault />
+        },
+        {
+          path: 'frequency',
+          element: <Frequency />
         }
       ]
     },
