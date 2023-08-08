@@ -1,8 +1,8 @@
 // assets
-import { IconDashboard, IconClipboard } from '@tabler/icons';
+import { IconDashboard, IconClipboardList } from '@tabler/icons';
 
 // constant
-const icons = { IconDashboard, IconClipboard };
+const icons = { IconDashboard, IconClipboardList };
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
@@ -24,7 +24,7 @@ const dashboard = {
       title: 'Frequência',
       type: 'item',
       url: '/frequency',
-      icon: icons.IconClipboard,
+      icon: icons.IconClipboardList,
       breadcrumbs: false
     }
   ]
