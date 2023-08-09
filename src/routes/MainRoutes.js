@@ -27,13 +27,13 @@ const MainRoutes = {
           element: <DashboardDefault />
         },
         {
-          path: 'frequency',
+          path: 'frequencia',
           element: <Frequency />
         }
       ]
     },
     {
-      path: 'reports',
+      path: 'relatorios',
       element: <SamplePage />
     }
   ]
