@@ -13,7 +13,7 @@ const dashboard = {
   caption: 'Controle de Bolsa Acadêmica',
   children: [
     {
-      id: 'default',
+      id: 'dashboard',
       title: 'Dashboard',
       type: 'item',
       url: '/dashboard',
@@ -21,7 +21,7 @@ const dashboard = {
       breadcrumbs: false
     },
     {
-      id: 'search',
+      id: 'pesquisa',
       title: 'Dados da Bolsa',
       type: 'item',
       url: '/pesquisa',
@@ -29,7 +29,7 @@ const dashboard = {
       breadcrumbs: false
     },
     {
-      id: 'frequency',
+      id: 'frequencia',
       title: 'Frequência',
       type: 'item',
       url: '/frequencia',
