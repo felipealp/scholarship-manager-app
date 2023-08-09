@@ -1,16 +1,14 @@
-import dashboard from './dashboard';
+import dashboard from './management';
 // import pages from './pages';
-// import utilities from './utilities';
-// import other from './other';
+import other from './reports';
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
   items: [
-    dashboard
+    dashboard,
     // pages,
-    // utilities,
-    // other
+    other
   ]
 };
 

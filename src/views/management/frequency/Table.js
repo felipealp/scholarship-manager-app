@@ -1,8 +1,10 @@
 // material-ui
 import { Typography } from '@mui/material';
 
+import './style.scss';
+
 // project imports
-import MainCard from 'ui-component/cards/MainCard';
+import MainCard from 'components/cards/MainCard';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
