@@ -1,5 +1,5 @@
 import dashboard from './management';
-// import pages from './pages';
+// import authentication from './authentication';
 import other from './reports';
 
 // ==============================|| MENU ITEMS ||============================== //
@@ -7,7 +7,7 @@ import other from './reports';
 const menuItems = {
   items: [
     dashboard,
-    // pages,
+    // authentication,
     other
   ]
 };

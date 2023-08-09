@@ -1,8 +1,8 @@
 // assets
-import { IconBrandChrome, IconHelp } from '@tabler/icons';
+import { IconListSearch, IconCheckupList, IconLayoutGridAdd } from '@tabler/icons';
 
 // constant
-const icons = { IconBrandChrome, IconHelp };
+const icons = { IconListSearch, IconCheckupList, IconLayoutGridAdd };
 
 // ==============================|| SAMPLE PAGE & DOCUMENTATION MENU ITEMS ||============================== //
 
@@ -10,21 +10,30 @@ const other = {
   id: 'sample-docs-roadmap',
   title: 'Relatórios',
   type: 'group',
+  caption: 'Controle de Atividades Realizadas',
   children: [
     {
       id: 'sample-page',
-      title: 'Sample Page',
+      title: 'Registro de Frequências',
       type: 'item',
       url: '/reports',
-      icon: icons.IconBrandChrome,
+      icon: icons.IconListSearch,
+      breadcrumbs: false
+    },
+    {
+      id: 'sample-page',
+      title: 'Relatório Semestral',
+      type: 'item',
+      url: '/reports',
+      icon: icons.IconCheckupList,
       breadcrumbs: false
     },
     {
       id: 'documentation',
-      title: 'Documentation',
+      title: 'Plano de Trabalho',
       type: 'item',
       url: 'https://codedthemes.gitbook.io/berry/',
-      icon: icons.IconHelp,
+      icon: icons.IconLayoutGridAdd,
       external: true,
       target: true
     }
