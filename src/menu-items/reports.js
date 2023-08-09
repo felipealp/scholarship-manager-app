@@ -14,18 +14,10 @@ const other = {
   children: [
     {
       id: 'sample-page',
-      title: 'Registro de Frequências',
+      title: 'Lista de Frequências',
       type: 'item',
       url: '/reports',
       icon: icons.IconListSearch,
-      breadcrumbs: false
-    },
-    {
-      id: 'sample-page',
-      title: 'Relatório Semestral',
-      type: 'item',
-      url: '/reports',
-      icon: icons.IconCheckupList,
       breadcrumbs: false
     },
     {
@@ -36,6 +28,14 @@ const other = {
       icon: icons.IconLayoutGridAdd,
       external: true,
       target: true
+    },
+    {
+      id: 'sample-page',
+      title: 'Relatório Semestral',
+      type: 'item',
+      url: '/reports',
+      icon: icons.IconCheckupList,
+      breadcrumbs: false
     }
   ]
 };
