@@ -30,7 +30,7 @@ const other = {
       target: true
     },
     {
-      id: 'sample-page',
+      id: 'sample-page3',
       title: 'Relatório Semestral',
       type: 'item',
       url: '/reports',

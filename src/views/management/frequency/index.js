@@ -3,24 +3,19 @@ import { useEffect, useState } from 'react';
 // material-ui
 import { Grid } from '@mui/material';
 
-// project imports
-// import EarningCard from './EarningCard';
-// import PopularCard from './PopularCard';
-// import TotalOrderLineChartCard from './TotalOrderLineChartCard';
-// import TotalIncomeDarkCard from './TotalIncomeDarkCard';
-// import TotalIncomeLightCard from './TotalIncomeLightCard';
-// import TotalGrowthBarChart from './TotalGrowthBarChart';
-import Table from './table/Table'
+import Table from './table'
 import { gridSpacing } from 'store/constant';
 
-// ==============================|| DEFAULT DASHBOARD ||============================== //
+// ============================== Frequency Page ============================== //
 
 const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     console.log(isLoading)
-    setLoading(false);
+    setTimeout(function() {
+      setLoading(false);
+    }, 2000);
   }, []);
 
   return (
@@ -29,7 +24,7 @@ const Dashboard = () => {
         <Grid container spacing={gridSpacing}>
           <Grid item xs={12} md={12}>
             {/* <PopularCard isLoading={isLoading} /> */}
-            <Table />
+            <Table isLoading={isLoading} />
           </Grid>
         </Grid>
       </Grid>
