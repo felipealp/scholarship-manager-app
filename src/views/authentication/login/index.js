@@ -48,7 +48,7 @@ const Login = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <Grid item container direction="column" alignItems="center" xs={12}>
-                      <Typography component={Link} to="/autenticacao/cadastro" variant="subtitle1" sx={{ textDecoration: 'none' }}>
+                      <Typography component={Link} to="/cadastro" variant="subtitle1" sx={{ textDecoration: 'none' }}>
                         Não tem uma conta? Cadastre-se
                       </Typography>
                     </Grid>

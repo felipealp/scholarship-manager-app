@@ -3,7 +3,10 @@ const authentication = (data) => {
     console.log('logar: ', data);
     // Simulate an asynchronous operation
     setTimeout(() => {
-      if (data.email === 'felipealvesalp@gmail.com' && data.password === '123') {
+      if (data.email === 'felipe@email.com' && data.password === '123') {
+        // [armazenar token e redirecionar página]
+        console.log('autenticou');
+        localStorage.setItem('user_token', '445545')
         resolve(`Success: Data processed - ${data}`);
       } else {
         reject({ message: 'Credenciais inválidas' });

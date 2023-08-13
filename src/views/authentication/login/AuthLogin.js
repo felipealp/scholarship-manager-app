@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -34,6 +35,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const AuthLogin = ({ ...others }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [checked, setChecked] = useState(true);
 
   const [showPassword, setShowPassword] = useState(false);
@@ -68,8 +70,7 @@ const AuthLogin = ({ ...others }) => {
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             await authentication(values);
-            // [armazenar token e redirecionar página]
-            console.log('autenticou');
+            navigate('/');
             setStatus({ success: true });
             setSubmitting(false);
           } catch (err) {

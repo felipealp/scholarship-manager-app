@@ -1,4 +1,5 @@
 import { lazy } from 'react';
+import { Navigate } from 'react-router-dom';
 
 // project imports
 import MainLayout from 'layout/MainLayout';
@@ -8,20 +9,29 @@ import Loadable from 'components/Loadable';
 const DashboardDefault = Loadable(lazy(() => import('views/management/dashboard')));
 const Frequency = Loadable(lazy(() => import('views/management/frequency')));
 
-// utilities routing
-
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/reports')));
 
-// ==============================|| MAIN ROUTING ||============================== //
+const ProtectedRoute = ({ element }) => {
+  const isAuthenticated = localStorage.getItem('user_token');
+  if (!isAuthenticated) {
+    return <Navigate to="/login" />;
+  }
+
+  return element;
+};
 
 const MainRoutes = {
   path: '/',
-  element: <MainLayout />,
+  element: <ProtectedRoute element={<MainLayout />} />,
   children: [
     {
       path: '/',
       children: [
+        {
+          path: '',
+          element: <Navigate to="/dashboard" />
+        },
         {
           path: 'dashboard',
           element: <DashboardDefault />
