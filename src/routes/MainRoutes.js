@@ -28,7 +28,16 @@ const MainRoutes = {
         },
         {
           path: 'frequencia',
-          element: <Frequency />
+          children: [
+            {
+              path: '',
+              element: <Frequency />
+            },
+            {
+              path: ':mes',
+              element: <Frequency />
+            }
+          ]
         }
       ]
     },
