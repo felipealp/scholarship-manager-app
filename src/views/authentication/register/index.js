@@ -1,26 +1,20 @@
 import { Link } from 'react-router-dom';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
-import { Divider, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Divider, Grid, Stack, Typography, Link as LinkMui } from '@mui/material';
 
 // project imports
-import AuthWrapper1 from '../AuthWrapper1';
-import AuthCardWrapper from '../AuthCardWrapper';
+import AuthWrapper from 'components/auth/AuthWrapper';
+import AuthCardWrapper from 'components/auth/AuthCardWrapper';
 import Logo from 'components/Logo';
 import AuthRegister from './AuthRegister';
-import AuthFooter from 'components/cards/AuthFooter';
 
-// assets
-
-// ===============================|| AUTH3 - REGISTER ||=============================== //
+// =============================== REGISTER =============================== //
 
 const Register = () => {
-  const theme = useTheme();
-  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <AuthWrapper1>
+    <AuthWrapper>
       <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>
         <Grid item xs={12}>
           <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>
@@ -33,20 +27,6 @@ const Register = () => {
                     </Link>
                   </Grid>
                   <Grid item xs={12}>
-                    <Grid container direction={matchDownSM ? 'column-reverse' : 'row'} alignItems="center" justifyContent="center">
-                      <Grid item>
-                        <Stack alignItems="center" justifyContent="center" spacing={1}>
-                          <Typography color={theme.palette.secondary.main} gutterBottom variant={matchDownSM ? 'h3' : 'h2'}>
-                            Sign up
-                          </Typography>
-                          <Typography variant="caption" fontSize="16px" textAlign={matchDownSM ? 'center' : 'inherit'}>
-                            Enter your credentials to continue
-                          </Typography>
-                        </Stack>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
                     <AuthRegister />
                   </Grid>
                   <Grid item xs={12}>
@@ -54,8 +34,8 @@ const Register = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <Grid item container direction="column" alignItems="center" xs={12}>
-                      <Typography component={Link} to="/pages/login/login3" variant="subtitle1" sx={{ textDecoration: 'none' }}>
-                        Already have an account?
+                      <Typography component={Link} to="/autenticacao" variant="subtitle1" sx={{ textDecoration: 'none' }}>
+                        Já tem uma conta? Faça Login
                       </Typography>
                     </Grid>
                   </Grid>
@@ -65,10 +45,14 @@ const Register = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} sx={{ m: 3, mt: 1 }}>
-          <AuthFooter />
+          <Stack direction="row" justifyContent="center">
+            <Typography variant="subtitle2" component={LinkMui} href="https://ufersa.edu.br/" target="_blank" underline="hover">
+              &copy; ufersa.com
+            </Typography>
+          </Stack>
         </Grid>
       </Grid>
-    </AuthWrapper1>
+    </AuthWrapper>
   );
 };
 
