@@ -15,6 +15,11 @@ const authentication = (data) => {
   });
 };
 
+const logout = () => {
+  localStorage.removeItem('user_token');
+  location.reload();
+}
+
 const register = (data) => {
   return new Promise((resolve, reject) => {
     console.log('cadastrar: ', data);
@@ -29,4 +34,4 @@ const register = (data) => {
   });
 };
 
-export { authentication, register };
+export { authentication, logout, register };
