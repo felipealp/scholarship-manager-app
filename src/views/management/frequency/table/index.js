@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { getFrequency } from 'models/frequency';
 import { useParams, useNavigate } from 'react-router-dom';
+
 import './style.scss';
 
 // project imports
@@ -54,12 +55,22 @@ const Table = () => {
           <div>
             <label htmlFor="month">Mês: </label>
             <select value={month} onChange={e => handleMonth(e.target.value)}>
-              <option value="agosto">agosto</option>
+              <option value="janeiro">janeiro</option>
+              <option value="fevereiro">fevereiro</option>
+              <option value="março">março</option>
+              <option value="abril">abril</option>
+              <option value="maio">maio</option>
+              <option value="junho">junho</option>
               <option value="julho">julho</option>
+              <option value="agosto">agosto</option>
+              <option value="setembro">setembro</option>
+              <option value="outrubro">outrubro</option>
+              <option value="novembro">novembro</option>
+              <option value="dezembro">dezembro</option>
             </select>
 
             <button onClick={() => console.log(frequency)}>Salvar</button>
-            <button onClick={() => console.log(frequency)}>Imprimir fOLHA</button>
+            <button onClick={() => console.log(frequency)}>Imprimir Folha</button>
           </div>
 
           <table>
