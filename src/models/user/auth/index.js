@@ -3,7 +3,7 @@ const authentication = (data) => {
     console.log('logar: ', data);
     // Simulate an asynchronous operation
     setTimeout(() => {
-      if (data.email === 'felipe@email.com' && data.password === '123') {
+      if (data.login === 'felipe@email.com' && data.password === '123') {
         // [armazenar token e redirecionar página]
         console.log('autenticou');
         localStorage.setItem('user_token', '445545');

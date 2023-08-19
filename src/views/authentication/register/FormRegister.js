@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -44,6 +45,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const FormRegister = ({ userType, ...others }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const [showPassword, setShowPassword] = useState(false);
 
@@ -128,10 +131,8 @@ const FormRegister = ({ userType, ...others }) => {
         validationSchema={validationSchema}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            setErrors({ campus: 'err.message' });
             await postRegister({ ...values, atualDate, futureDate });
-            // [redirecionar página]
-            console.log('cadastrou');
+            navigate('/');
             setStatus({ success: true });
             setSubmitting(false);
           } catch (err) {
