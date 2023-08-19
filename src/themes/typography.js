@@ -68,6 +68,17 @@ export default function themeTypography(theme) {
     customInput: {
       marginTop: 1,
       marginBottom: 1,
+      '& > label': {
+        top: 15,
+        left: 0,
+        color: theme.grey500,
+        '&[data-shrink="false"]': {
+          top: 0
+        }
+      },
+      '& > div > input': {
+        padding: '21px 14px 10px !important'
+      },
       '& legend': {
         display: 'none'
       },
