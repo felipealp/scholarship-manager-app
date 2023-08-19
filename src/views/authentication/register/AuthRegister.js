@@ -18,7 +18,7 @@ const AuthRegister = () => {
       return <FormRegister userType={userType} />;
     } else {
       return (
-        <div style={{ textAlign: 'center', margin: '20px', color: '#999999'}}>
+        <div style={{ textAlign: 'center', margin: '20px', color: '#999999' }}>
           Para prosseguir com o cadastro é importante selecionar esse campo considerando que o sistema fornece as funcionalidades de acordo
           com o seu perfil
         </div>

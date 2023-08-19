@@ -12,7 +12,6 @@ import AuthRegister from './AuthRegister';
 // =============================== REGISTER =============================== //
 
 const Register = () => {
-
   return (
     <AuthWrapper>
       <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>
