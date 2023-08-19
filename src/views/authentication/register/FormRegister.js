@@ -36,7 +36,7 @@ import AnimateButton from 'components/extended/AnimateButton';
 import { strengthColor, strengthIndicator } from 'utils/password-strength';
 
 // models
-import { register } from 'models/auth';
+import { getCampus, getProjects, postRegister } from 'models/user/register';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
@@ -55,6 +55,9 @@ const FormRegister = ({ userType, ...others }) => {
 
   currentDate.setFullYear(currentDate.getFullYear() + 4);
   const [futureDate, setFutureDate] = useState(dayjs(currentDate.toISOString().slice(0, 16)));
+
+  const [campus, setCampus] = useState([]);
+  const [projects, setProjects] = useState([]);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -92,8 +95,20 @@ const FormRegister = ({ userType, ...others }) => {
     password: Yup.string().max(255).required('A senha é obrigatória')
   });
 
+  const fetchCampus = async () => {
+    const campusColection = await getCampus();
+    setCampus(campusColection);
+  };
+
+  const fetchProjects = async () => {
+    const projectColection = await getProjects();
+    setProjects(projectColection);
+  };
+
   useEffect(() => {
     changePassword('123456');
+    fetchCampus();
+    fetchProjects();
   }, [userType]);
 
   return (
@@ -114,7 +129,7 @@ const FormRegister = ({ userType, ...others }) => {
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             setErrors({ campus: 'err.message' });
-            await register({ ...values, atualDate, futureDate });
+            await postRegister({ ...values, atualDate, futureDate });
             // [redirecionar página]
             console.log('cadastrou');
             setStatus({ success: true });
@@ -142,9 +157,11 @@ const FormRegister = ({ userType, ...others }) => {
                     label="Campus"
                     onChange={handleChange}
                   >
-                    <MenuItem value="Bolsista">Bolsista</MenuItem>
-                    <MenuItem value="Coordenador">Coordenador</MenuItem>
-                    <MenuItem value="Reitoria">Reitoria</MenuItem>
+                    {campus.map((campusItem) => (
+                      <MenuItem key={campusItem.id} value={campusItem.nome}>
+                        {campusItem.nome}
+                      </MenuItem>
+                    ))}
                   </Select>
                   {touched.campus && errors.campus && (
                     <FormHelperText error id="standard-weight-helper-text--register">
@@ -163,9 +180,11 @@ const FormRegister = ({ userType, ...others }) => {
                     label="Projeto"
                     onChange={handleChange}
                   >
-                    <MenuItem value="Bolsista">Bolsista</MenuItem>
-                    <MenuItem value="Coordenador">Coordenador</MenuItem>
-                    <MenuItem value="Reitoria">Reitoria</MenuItem>
+                    {projects.map((projectsItem) => (
+                      <MenuItem key={projectsItem.id} value={projectsItem.nome}>
+                        {projectsItem.nome}
+                      </MenuItem>
+                    ))}
                   </Select>
                   {touched.project && errors.project && (
                     <FormHelperText error id="standard-weight-helper-text--register">

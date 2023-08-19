@@ -31,7 +31,7 @@ import Transitions from 'components/extended/Transitions';
 import User1 from 'assets/images/users/user-round.svg';
 
 // models
-import { logout } from 'models/auth';
+import { logout } from 'models/user/auth';
 
 // assets
 import { IconLogout, IconSettings, IconUser } from '@tabler/icons';

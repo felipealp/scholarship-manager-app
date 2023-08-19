@@ -27,7 +27,7 @@ import { Formik } from 'formik';
 import AnimateButton from 'components/extended/AnimateButton';
 
 // models
-import { authentication } from 'models/auth';
+import { authentication } from 'models/user/auth';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
