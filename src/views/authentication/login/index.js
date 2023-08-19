@@ -34,7 +34,7 @@ const Login = () => {
                       <Grid item>
                         <Stack alignItems="center" justifyContent="center" spacing={1}>
                           <Typography variant="caption" fontSize="16px" textAlign={matchDownSM ? 'center' : 'inherit'}>
-                            Sistema de Gerenciamento de Bolsas Acadêmica
+                            Sistema de Gerenciamento de Bolsa Acadêmica
                           </Typography>
                         </Stack>
                       </Grid>
