@@ -8,7 +8,6 @@ import {
   Button,
   FormControl,
   FormHelperText,
-  FormLabel,
   MenuItem,
   Select,
   Grid,
@@ -21,7 +20,14 @@ import {
   useMediaQuery
 } from '@mui/material';
 
+// eslint-disable-next-line no-restricted-imports
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 // third party
+import dayjs from 'dayjs';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 
@@ -44,6 +50,12 @@ const FormRegister = ({ userType, ...others }) => {
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
 
+  const currentDate = new Date();
+  const [atualDate, setAtualDate] = useState(dayjs(currentDate.toISOString().slice(0, 16)));
+
+  currentDate.setFullYear(currentDate.getFullYear() + 4);
+  const [futureDate, setFutureDate] = useState(dayjs(currentDate.toISOString().slice(0, 16)));
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -58,57 +70,51 @@ const FormRegister = ({ userType, ...others }) => {
     setLevel(strengthColor(temp));
   };
 
+  const customCampusValidation = (value) => {
+    return !(userType === 'Bolsista' && !value);
+  };
+
+  const customProjectValidation = (value) => {
+    return !((userType === 'Bolsista' || userType === 'Coordenador') && !value);
+  };
+
   useEffect(() => {
     changePassword('123456');
   }, []);
 
-  const universityData = (errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values) => {
-    return (
-      <>
-        <FormLabel>Perfil de {userType}</FormLabel>
-        <FormControl fullWidth error={Boolean(touched.campus && errors.campus)}>
-          <InputLabel id="demo-simple-select-label">Campus</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            name="campus" // Defina o name aqui
-            value={values.campus}
-            label="Campus"
-            onChange={handleChange}
-          >
-            <MenuItem value="Bolsista">Bolsista</MenuItem>
-            <MenuItem value="Coordenador">Coordenador</MenuItem>
-            <MenuItem value="Reitoria">Reitoria</MenuItem>
-          </Select>
-        </FormControl>
-      </>
-    );
-  };
+  let validationSchema = Yup.object().shape({
+    campus: Yup.string().test('custom-validation', 'O campus é obrigatório', customCampusValidation),
+    project: Yup.string().test('custom-validation', 'O projeto é obrigatório', customProjectValidation),
+    matriculation: Yup.string().max(255).required('A matrícula é obrigatória'),
+    username: Yup.string().max(255).required('O usuário é obrigatório'),
+    name: Yup.string().max(255).required('O nome é obrigatório'),
+    email: Yup.string().email('O email deve ser válido').max(255).required('O email é obrigatório'),
+    password: Yup.string().max(255).required('A senha é obrigatória')
+  });
+
+  useEffect(() => {
+    changePassword('123456');
+  }, [userType]);
 
   return (
     <>
       <Formik
         initialValues={{
           campus: '',
+          project: '',
           cargo: '',
-          matricula: '',
+          matriculation: '',
           username: '',
           name: '',
           email: '',
           password: '',
           submit: null
         }}
-        validationSchema={Yup.object().shape({
-          campus: Yup.string().max(255).required('A matrícula é obrigatória'),
-          matricula: Yup.string().max(255).required('A matrícula é obrigatória'),
-          username: Yup.string().max(255).required('O usuário é obrigatório'),
-          name: Yup.string().max(255).required('O nome é obrigatório'),
-          email: Yup.string().email('O email deve ser válido').max(255).required('O email é obrigatório'),
-          password: Yup.string().max(255).required('A senha é obrigatória')
-        })}
+        validationSchema={validationSchema}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            await register(values);
+            setErrors({ campus: 'err.message' });
+            await register({ ...values, atualDate, futureDate });
             // [redirecionar página]
             console.log('cadastrou');
             setStatus({ success: true });
@@ -123,25 +129,128 @@ const FormRegister = ({ userType, ...others }) => {
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit} {...others} style={{ margin: '1rem 0' }}>
-            {universityData(errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values)}
+            <div style={{ margin: '15px 0px 10px 5px' }}>Dados Intitucionais</div>
+            {userType === 'Bolsista' && (
+              <>
+                <FormControl fullWidth error={Boolean(touched.campus && errors.campus)} style={{ margin: '8px 0' }}>
+                  <InputLabel id="demo-simple-select-label">Campus</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="campus" // Defina o name aqui
+                    value={values.campus}
+                    label="Campus"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value="Bolsista">Bolsista</MenuItem>
+                    <MenuItem value="Coordenador">Coordenador</MenuItem>
+                    <MenuItem value="Reitoria">Reitoria</MenuItem>
+                  </Select>
+                  {touched.campus && errors.campus && (
+                    <FormHelperText error id="standard-weight-helper-text--register">
+                      {errors.campus}
+                    </FormHelperText>
+                  )}
+                </FormControl>
 
-            <FormLabel>Dados Pessoais</FormLabel>
+                <FormControl fullWidth error={Boolean(touched.project && errors.project)} style={{ margin: '8px 0' }}>
+                  <InputLabel id="demo-simple-select-label">Projeto</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="project" // Defina o name aqui
+                    value={values.project}
+                    label="Projeto"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value="Bolsista">Bolsista</MenuItem>
+                    <MenuItem value="Coordenador">Coordenador</MenuItem>
+                    <MenuItem value="Reitoria">Reitoria</MenuItem>
+                  </Select>
+                  {touched.project && errors.project && (
+                    <FormHelperText error id="standard-weight-helper-text--register">
+                      {errors.project}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </>
+            )}
+
+            {userType === 'Coordenador' && (
+              <>
+                <FormControl fullWidth error={Boolean(touched.project && errors.project)} style={{ margin: '8px 0' }}>
+                  <InputLabel id="demo-simple-select-label">Projeto</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="project" // Defina o name aqui
+                    value={values.project}
+                    label="Projeto"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value="Bolsista">Bolsista</MenuItem>
+                    <MenuItem value="Coordenador">Coordenador</MenuItem>
+                    <MenuItem value="Reitoria">Reitoria</MenuItem>
+                  </Select>
+                  {touched.project && errors.project && (
+                    <FormHelperText error id="standard-weight-helper-text--register">
+                      {errors.project}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </>
+            )}
+
+            {userType === 'Reitoria' && (
+              <>
+                <FormControl fullWidth error={Boolean(touched.dateEnd && errors.dateEnd)}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}>
+                      <DatePicker
+                        label="Data de Início"
+                        value={atualDate}
+                        onChange={(newValue) => setAtualDate(newValue)}
+                        sx={{ width: '100%', margin: '8px 0' }}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </FormControl>
+
+                <FormControl fullWidth error={Boolean(touched.dateEnd && errors.dateEnd)}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}>
+                      <DatePicker
+                        label="Data de Fim"
+                        value={futureDate}
+                        onChange={(newValue) => setFutureDate(newValue)}
+                        sx={{ width: '100%', margin: '8px 0' }}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </FormControl>
+              </>
+            )}
+
             <Grid container spacing={matchDownSM ? 0 : 2}>
               <Grid item xs={12} sm={6}>
-                <FormControl fullWidth error={Boolean(touched.matricula && errors.matricula)} sx={{ ...theme.typography.customInput }}>
-                  <InputLabel htmlFor="outlined-adornment-matricula-register">Matrícula</InputLabel>
+                <FormControl
+                  fullWidth
+                  error={Boolean(touched.matriculation && errors.matriculation)}
+                  sx={{ ...theme.typography.customInput }}
+                >
+                  <InputLabel htmlFor="outlined-adornment-matriculation-register">Matrícula</InputLabel>
                   <OutlinedInput
-                    id="outlined-adornment-matricula-register"
-                    type="matricula"
-                    value={values.matricula}
-                    name="matricula"
+                    id="outlined-adornment-matriculation-register"
+                    type="text"
+                    value={values.matriculation}
+                    name="matriculation"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     inputProps={{}}
                   />
-                  {touched.matricula && errors.matricula && (
+                  {touched.matriculation && errors.matriculation && (
                     <FormHelperText error id="standard-weight-helper-text--register">
-                      {errors.matricula}
+                      {errors.matriculation}
                     </FormHelperText>
                   )}
                 </FormControl>
@@ -151,7 +260,7 @@ const FormRegister = ({ userType, ...others }) => {
                   <InputLabel htmlFor="outlined-adornment-username-register">Nome de Usuário</InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-username-register"
-                    type="username"
+                    type="text"
                     value={values.username}
                     name="username"
                     onBlur={handleBlur}
@@ -167,11 +276,12 @@ const FormRegister = ({ userType, ...others }) => {
               </Grid>
             </Grid>
 
+            <div style={{ margin: '15px 0px 10px 5px' }}>Dados Pessoais</div>
             <FormControl fullWidth error={Boolean(touched.name && errors.name)} sx={{ ...theme.typography.customInput }}>
               <InputLabel htmlFor="outlined-adornment-name-register">Nome</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-name-register"
-                type="name"
+                type="text"
                 value={values.name}
                 name="name"
                 onBlur={handleBlur}

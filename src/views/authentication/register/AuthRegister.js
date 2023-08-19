@@ -36,7 +36,7 @@ const AuthRegister = () => {
         </Grid>
       </Grid>
 
-      <div>
+      <div style={{ marginTop: '25px' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Tipo de Usuário</InputLabel>
           <Select
