@@ -61,7 +61,7 @@ const AuthLogin = ({ ...others }) => {
       <Grid container direction="column" justifyContent="center" spacing={2}>
         <Grid item xs={12} container alignItems="center" justifyContent="center">
           <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle1">Entre com Endereço de Email</Typography>
+            <Typography variant="subtitle1">Entre com Endereço de Email/Usuário</Typography>
           </Box>
         </Grid>
       </Grid>
