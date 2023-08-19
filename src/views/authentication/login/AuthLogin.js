@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // material-ui
@@ -47,8 +47,17 @@ const AuthLogin = ({ ...others }) => {
     event.preventDefault();
   };
 
+  useEffect(() => {
+    const authLoginElement = document.querySelector('.auth-login');
+    authLoginElement.addEventListener('click', () => {});
+
+    return () => {
+      authLoginElement.removeEventListener('click', () => {});
+    };
+  }, []);
+
   return (
-    <>
+    <div className="auth-login">
       <Grid container direction="column" justifyContent="center" spacing={2}>
         <Grid item xs={12} container alignItems="center" justifyContent="center">
           <Box sx={{ mb: 2 }}>
@@ -59,12 +68,12 @@ const AuthLogin = ({ ...others }) => {
 
       <Formik
         initialValues={{
-          email: '',
+          login: '',
           password: '',
           submit: null
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string().email('O email deve ser válido').max(255).required('O email é obrigatório'),
+          login: Yup.string().max(255).required('O login é obrigatório'),
           password: Yup.string().max(255).required('A senha é obrigatória')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
@@ -82,21 +91,21 @@ const AuthLogin = ({ ...others }) => {
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit} {...others}>
-            <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-email-login">Email</InputLabel>
+            <FormControl fullWidth error={Boolean(touched.login && errors.login)} sx={{ ...theme.typography.customInput }}>
+              <InputLabel htmlFor="outlined-adornment-email-login">Email/Usuário</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-email-login"
-                type="email"
-                value={values.email}
-                name="email"
+                type="text"
+                value={values.login}
+                name="login"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                label="Email"
+                label="Email/Usuário"
                 inputProps={{}}
               />
-              {touched.email && errors.email && (
+              {touched.login && errors.login && (
                 <FormHelperText error id="standard-weight-helper-text-email-login">
-                  {errors.email}
+                  {errors.login}
                 </FormHelperText>
               )}
             </FormControl>
@@ -161,7 +170,7 @@ const AuthLogin = ({ ...others }) => {
           </form>
         )}
       </Formik>
-    </>
+    </div>
   );
 };
 
