@@ -141,7 +141,6 @@ const FormRegister = ({ userType, ...others }) => {
               navigate('/');
             }, 5000);
           } catch (err) {
-            console.error(err);
             setStatus({ success: false });
             setErrors({ submit: err.message });
             setSubmitting(false);

@@ -22,7 +22,6 @@ const getProjects = async () => {
 };
 
 const postRegister = async (data) => {
-  console.log(data);
   let userData;
   let userEndpoint;
 
@@ -72,9 +71,7 @@ const postRegister = async (data) => {
     };
   }
 
-  console.log(userEndpoint, userData);
   const register = await post(userEndpoint, userData);
-  console.log(register);
 
   if (register.data) {
     return register.data;

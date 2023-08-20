@@ -1,15 +1,34 @@
 import axios from 'axios';
+import configApi from 'services/configAPi';
 
-const get = (url) => {
-  const response = axios.get(url, {
-    baseURL: 'http://127.0.0.1:8000/api',
-    timeout: 1000,
-    headers: {
-      Authorization: `Token 674226d9712f6a1e4036101c8ba4bd6ad85d743d` // Token no cabeçalho "Authorization"
-    }
-  });
+const get = async (url) => {
+  try {
+    const response = await axios.get(url, {
+      baseURL: configApi.apiUrl,
+      headers: {
+        Authorization: `Token ${configApi.token}`
+      }
+    });
 
-  return response;
+    return response;
+  } catch (err) {
+    return { error: err };
+  }
 };
 
-export { get };
+const post = (url, data) => {
+  try {
+    const response = axios.post(url, data, {
+      baseURL: configApi.apiUrl,
+      headers: {
+        Authorization: `Token ${configApi.token}`
+      }
+    });
+
+    return response;
+  } catch (err) {
+    return { error: err };
+  }
+};
+
+export { get, post };
