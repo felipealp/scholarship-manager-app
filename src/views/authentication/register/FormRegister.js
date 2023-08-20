@@ -81,7 +81,7 @@ const FormRegister = ({ userType, ...others }) => {
   };
 
   const customProjectValidation = (value) => {
-    return !((userType === 'Bolsista' || userType === 'Coordenador') && !value);
+    return !((userType === 'Bolsista' || userType === 'Orientador' || userType === 'Coordenador') && !value);
   };
 
   useEffect(() => {
@@ -131,7 +131,7 @@ const FormRegister = ({ userType, ...others }) => {
         validationSchema={validationSchema}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            await postRegister({ ...values, atualDate, futureDate });
+            await postRegister({ userType, ...values, atualDate, futureDate });
             navigate('/');
             setStatus({ success: true });
             setSubmitting(false);
@@ -153,13 +153,13 @@ const FormRegister = ({ userType, ...others }) => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    name="campus" // Defina o name aqui
+                    name="campus"
                     value={values.campus}
                     label="Campus"
                     onChange={handleChange}
                   >
                     {campus.map((campusItem) => (
-                      <MenuItem key={campusItem.id} value={campusItem.nome}>
+                      <MenuItem key={campusItem.id} value={campusItem.id}>
                         {campusItem.nome}
                       </MenuItem>
                     ))}
@@ -176,13 +176,13 @@ const FormRegister = ({ userType, ...others }) => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    name="project" // Defina o name aqui
+                    name="project"
                     value={values.project}
                     label="Projeto"
                     onChange={handleChange}
                   >
                     {projects.map((projectsItem) => (
-                      <MenuItem key={projectsItem.id} value={projectsItem.nome}>
+                      <MenuItem key={projectsItem.id} value={projectsItem.id}>
                         {projectsItem.nome}
                       </MenuItem>
                     ))}
@@ -203,14 +203,43 @@ const FormRegister = ({ userType, ...others }) => {
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    name="project" // Defina o name aqui
+                    name="project"
                     value={values.project}
                     label="Projeto"
                     onChange={handleChange}
                   >
-                    <MenuItem value="Bolsista">Bolsista</MenuItem>
-                    <MenuItem value="Coordenador">Coordenador</MenuItem>
-                    <MenuItem value="Reitoria">Reitoria</MenuItem>
+                    {projects.map((projectsItem) => (
+                      <MenuItem key={projectsItem.id} value={projectsItem.id}>
+                        {projectsItem.nome}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {touched.project && errors.project && (
+                    <FormHelperText error id="standard-weight-helper-text--register">
+                      {errors.project}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </>
+            )}
+
+            {userType === 'Orientador' && (
+              <>
+                <FormControl fullWidth error={Boolean(touched.project && errors.project)} style={{ margin: '8px 0' }}>
+                  <InputLabel id="demo-simple-select-label">Projeto</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="project"
+                    value={values.project}
+                    label="Projeto"
+                    onChange={handleChange}
+                  >
+                    {projects.map((projectsItem) => (
+                      <MenuItem key={projectsItem.id} value={projectsItem.id}>
+                        {projectsItem.nome}
+                      </MenuItem>
+                    ))}
                   </Select>
                   {touched.project && errors.project && (
                     <FormHelperText error id="standard-weight-helper-text--register">
@@ -407,7 +436,6 @@ const FormRegister = ({ userType, ...others }) => {
   );
 };
 
-// Defina o tipo da propriedade userType
 FormRegister.propTypes = {
   userType: PropTypes.string.isRequired
 };
