@@ -62,6 +62,8 @@ const FormRegister = ({ userType, ...others }) => {
   const [campus, setCampus] = useState([]);
   const [projects, setProjects] = useState([]);
 
+  const [success, setSuccess] = useState(false);
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -77,11 +79,11 @@ const FormRegister = ({ userType, ...others }) => {
   };
 
   const customCampusValidation = (value) => {
-    return !(userType === 'Bolsista' && !value);
+    return !((userType === 'Bolsista' || userType === 'Coordenador') && !value);
   };
 
   const customProjectValidation = (value) => {
-    return !((userType === 'Bolsista' || userType === 'Orientador' || userType === 'Coordenador') && !value);
+    return !((userType === 'Bolsista' || userType === 'Orientador') && !value);
   };
 
   useEffect(() => {
@@ -132,9 +134,12 @@ const FormRegister = ({ userType, ...others }) => {
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             await postRegister({ userType, ...values, atualDate, futureDate });
-            navigate('/');
             setStatus({ success: true });
             setSubmitting(false);
+            setSuccess(true);
+            setTimeout(() => {
+              navigate('/');
+            }, 5000);
           } catch (err) {
             console.error(err);
             setStatus({ success: false });
@@ -196,35 +201,31 @@ const FormRegister = ({ userType, ...others }) => {
               </>
             )}
 
-            {userType === 'Coordenador' && (
-              <>
-                <FormControl fullWidth error={Boolean(touched.project && errors.project)} style={{ margin: '8px 0' }}>
-                  <InputLabel id="demo-simple-select-label">Projeto</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    name="project"
-                    value={values.project}
-                    label="Projeto"
-                    onChange={handleChange}
-                  >
-                    {projects.map((projectsItem) => (
-                      <MenuItem key={projectsItem.id} value={projectsItem.id}>
-                        {projectsItem.nome}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {touched.project && errors.project && (
-                    <FormHelperText error id="standard-weight-helper-text--register">
-                      {errors.project}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </>
-            )}
-
             {userType === 'Orientador' && (
               <>
+                <FormControl fullWidth error={Boolean(touched.campus && errors.campus)} style={{ margin: '8px 0' }}>
+                  <InputLabel id="demo-simple-select-label">Campus</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="campus"
+                    value={values.campus}
+                    label="Campus"
+                    onChange={handleChange}
+                  >
+                    {campus.map((campusItem) => (
+                      <MenuItem key={campusItem.id} value={campusItem.id}>
+                        {campusItem.nome}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {touched.campus && errors.campus && (
+                    <FormHelperText error id="standard-weight-helper-text--register">
+                      {errors.campus}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+
                 <FormControl fullWidth error={Boolean(touched.project && errors.project)} style={{ margin: '8px 0' }}>
                   <InputLabel id="demo-simple-select-label">Projeto</InputLabel>
                   <Select
@@ -250,8 +251,58 @@ const FormRegister = ({ userType, ...others }) => {
               </>
             )}
 
-            {userType === 'Reitoria' && (
+            {userType === 'Coordenador' && (
               <>
+                <FormControl fullWidth error={Boolean(touched.campus && errors.campus)} style={{ margin: '8px 0' }}>
+                  <InputLabel id="demo-simple-select-label">Campus</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="campus"
+                    value={values.campus}
+                    label="Campus"
+                    onChange={handleChange}
+                  >
+                    {campus.map((campusItem) => (
+                      <MenuItem key={campusItem.id} value={campusItem.id}>
+                        {campusItem.nome}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {touched.campus && errors.campus && (
+                    <FormHelperText error id="standard-weight-helper-text--register">
+                      {errors.campus}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              </>
+            )}
+
+            {userType === 'Pró-Reitor' && (
+              <>
+                <FormControl fullWidth error={Boolean(touched.campus && errors.campus)} style={{ margin: '8px 0' }}>
+                  <InputLabel id="demo-simple-select-label">Campus</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="campus"
+                    value={values.campus}
+                    label="Campus"
+                    onChange={handleChange}
+                  >
+                    {campus.map((campusItem) => (
+                      <MenuItem key={campusItem.id} value={campusItem.id}>
+                        {campusItem.nome}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  {touched.campus && errors.campus && (
+                    <FormHelperText error id="standard-weight-helper-text--register">
+                      {errors.campus}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+
                 <FormControl fullWidth error={Boolean(touched.dateEnd && errors.dateEnd)}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DatePicker']}>
@@ -422,9 +473,28 @@ const FormRegister = ({ userType, ...others }) => {
               )}
             </Stack>
 
+            <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
+              {success && (
+                <Box sx={{ mt: 3 }}>
+                  <FormHelperText style={{ color: 'green', textAlign: 'center' }}>Cadastro realizado com sucesso.</FormHelperText>
+                  <FormHelperText style={{ color: 'green', textAlign: 'center' }}>
+                    Você será redirecionado para tela de login!
+                  </FormHelperText>
+                </Box>
+              )}
+            </Stack>
+
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                <Button
+                  disableElevation
+                  disabled={isSubmitting || success}
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
+                >
                   Cadastrar
                 </Button>
               </AnimateButton>

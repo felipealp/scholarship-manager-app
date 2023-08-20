@@ -49,7 +49,7 @@ const AuthRegister = () => {
             <MenuItem value="Bolsista">Bolsista</MenuItem>
             <MenuItem value="Orientador">Orientador</MenuItem>
             <MenuItem value="Coordenador">Coordenador</MenuItem>
-            <MenuItem value="Reitoria">Reitoria</MenuItem>
+            <MenuItem value="Pró-Reitor">Pró-Reitor</MenuItem>
           </Select>
         </FormControl>
       </div>
