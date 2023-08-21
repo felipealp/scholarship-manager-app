@@ -31,4 +31,16 @@ const post = (url, data) => {
   }
 };
 
-export { get, post };
+const auth = (data) => {
+  try {
+    const response = axios.post('/auth-token/', data, {
+      baseURL: configApi.url
+    });
+
+    return response;
+  } catch (err) {
+    return { error: err };
+  }
+};
+
+export { get, post, auth };

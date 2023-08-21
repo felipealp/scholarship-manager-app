@@ -1,9 +1,23 @@
-const authentication = (data) => {
+// import { auth as requestAuth } from 'services/request';
+
+const authentication = async (data) => {
+  console.log(data)
+  // localStorage.setItem('user_token', '445545')
+  // const auth = await requestAuth(data);
+  // console.log('auth')
+  // if (auth.data) {
+  //   return auth.data;
+  // }
+
+  // return auth;
+
   return new Promise((resolve, reject) => {
     console.log('logar: ', data);
     // Simulate an asynchronous operation
     setTimeout(() => {
-      if (data.login === 'felipe@email.com' && data.password === '123') {
+      // if (data.login === 'felipe@email.com' && data.password === '123') {
+
+      if (data.password) {
         // [armazenar token e redirecionar página]
         console.log('autenticou');
         localStorage.setItem('user_token', '445545');

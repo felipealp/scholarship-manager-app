@@ -77,7 +77,7 @@ const postRegister = async (data) => {
     return register.data;
   }
 
-  return [];
+  return register;
 };
 
 export { getCampus, getProjects, postRegister };
