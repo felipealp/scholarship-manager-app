@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Divider, Grid, Stack, Typography, useMediaQuery, Link as LinkMui } from '@mui/material';
+import { Grid, Stack, Typography, useMediaQuery, Link as LinkMui } from '@mui/material';
 
 // project imports
 import AuthWrapper from 'components/auth/AuthWrapper';
@@ -42,16 +42,6 @@ const Login = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <AuthLogin />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Divider />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Grid item container direction="column" alignItems="center" xs={12}>
-                      <Typography component={Link} to="/cadastro" variant="subtitle1" sx={{ textDecoration: 'none' }}>
-                        Não tem uma conta? Cadastre-se
-                      </Typography>
-                    </Grid>
                   </Grid>
                 </Grid>
               </AuthCardWrapper>
