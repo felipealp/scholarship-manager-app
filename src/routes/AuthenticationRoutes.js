@@ -7,7 +7,6 @@ import MinimalLayout from 'layout/MinimalLayout';
 
 // login components
 const Login = Loadable(lazy(() => import('views/authentication/login')));
-const Register = Loadable(lazy(() => import('views/authentication/register')));
 
 const UnprotectedRoute = ({ element }) => {
   const isAuthenticated = localStorage.getItem('user_token');
@@ -25,12 +24,12 @@ const AuthenticationRoutes = {
     {
       path: 'login',
       element: <Login />
-    },
-    {
-      path: 'cadastro',
-      element: <Register />
     }
   ]
+};
+
+UnprotectedRoute.propTypes = {
+  element: PropTypes.node
 };
 
 export default AuthenticationRoutes;
