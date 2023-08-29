@@ -8,7 +8,7 @@ import Loadable from 'components/Loadable';
 
 // dashboard routing
 const Dashboard = Loadable(lazy(() => import('views/management/dashboard')));
-const UserRegister = Loadable(lazy(() => import('views/management/userRegister')));
+const UserRegister = Loadable(lazy(() => import('views/registers/userRegister')));
 const Frequency = Loadable(lazy(() => import('views/management/frequency')));
 
 // sample page routing
