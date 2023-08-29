@@ -6,10 +6,14 @@ import PropTypes from 'prop-types';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'components/Loadable';
 
-// dashboard routing
-const Dashboard = Loadable(lazy(() => import('views/management/dashboard')));
+// registers routing
+const CampusRegister = Loadable(lazy(() => import('views/registers/campusRegister')));
+const ProjectRegister = Loadable(lazy(() => import('views/registers/projectRegister')));
 const UserRegister = Loadable(lazy(() => import('views/registers/userRegister')));
 const Frequency = Loadable(lazy(() => import('views/management/frequency')));
+
+// dashboard routing
+const Dashboard = Loadable(lazy(() => import('views/management/dashboard')));
 
 // sample page routing
 const SamplePage = Loadable(lazy(() => import('views/reports')));
@@ -31,16 +35,38 @@ const MainRoutes = {
       path: '/',
       children: [
         {
+          path: 'cadastro',
+          children: [
+            {
+              path: 'campus',
+              element: <CampusRegister />
+            },
+            {
+              path: 'projeto',
+              element: <ProjectRegister />
+            },
+            {
+              path: 'usuario',
+              children: [
+                {
+                  path: '',
+                  element: <UserRegister />
+                },
+                {
+                  path: ':tipo',
+                  element: <UserRegister />
+                }
+              ]
+            }
+          ]
+        },
+        {
           path: '',
           element: <Navigate to="/dashboard" />
         },
         {
           path: 'dashboard',
           element: <Dashboard />
-        },
-        {
-          path: 'usuarios/cadastro',
-          element: <UserRegister />
         },
         {
           path: 'frequencia',
