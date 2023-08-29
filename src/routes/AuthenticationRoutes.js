@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // project imports
 import Loadable from 'components/Loadable';

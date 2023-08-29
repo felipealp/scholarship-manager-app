@@ -1,12 +1,14 @@
 import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // project imports
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'components/Loadable';
 
 // dashboard routing
-const DashboardDefault = Loadable(lazy(() => import('views/management/dashboard')));
+const Dashboard = Loadable(lazy(() => import('views/management/dashboard')));
+const UserRegister = Loadable(lazy(() => import('views/management/userRegister')));
 const Frequency = Loadable(lazy(() => import('views/management/frequency')));
 
 // sample page routing
@@ -34,7 +36,11 @@ const MainRoutes = {
         },
         {
           path: 'dashboard',
-          element: <DashboardDefault />
+          element: <Dashboard />
+        },
+        {
+          path: 'usuarios/cadastro',
+          element: <UserRegister />
         },
         {
           path: 'frequencia',
@@ -56,6 +62,10 @@ const MainRoutes = {
       element: <SamplePage />
     }
   ]
+};
+
+ProtectedRoute.propTypes = {
+  element: PropTypes.node
 };
 
 export default MainRoutes;
