@@ -1,10 +1,22 @@
-import dashboard from './management';
+import management from './management';
 import other from './reports';
 
-// ==============================|| MENU ITEMS ||============================== //
+// dean
+import deanManagement from './dean/management';
+import deanRegisters from './dean/registers';
 
-const menuItems = {
-  items: [dashboard, other]
-};
+const userType = localStorage.getItem('user_type');
+
+let menuItems;
+
+if (userType === 'reitor') {
+  menuItems = {
+    items: [deanManagement, deanRegisters]
+  };
+} else {
+  menuItems = {
+    items: [management, other]
+  };
+}
 
 export default menuItems;
