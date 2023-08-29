@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,17 +6,16 @@ import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Button,
+  Grid,
   FormControl,
   FormHelperText,
   MenuItem,
   Select,
-  Grid,
-  IconButton,
-  InputAdornment,
+  // TextField,
+  // Autocomplete,
   InputLabel,
   OutlinedInput,
   Stack,
-  Typography,
   useMediaQuery
 } from '@mui/material';
 
@@ -34,29 +32,20 @@ import { Formik } from 'formik';
 
 // project imports
 import AnimateButton from 'components/extended/AnimateButton';
-import { strengthColor, strengthIndicator } from 'utils/password-strength';
 
 // models
-import { getCampus, getProjects, postRegister } from 'models/user/register';
+import { getCampus, getProjects, postRegister } from 'models/project/register';
 
-// assets
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
-const FormRegister = ({ userType, ...others }) => {
+const FormRegister = ({ ...others }) => {
   const theme = useTheme();
   const navigate = useNavigate();
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-  const [showPassword, setShowPassword] = useState(false);
-
-  const [strength, setStrength] = useState(0);
-  const [level, setLevel] = useState();
 
   const currentDate = new Date();
   const [atualDate, setAtualDate] = useState(dayjs(currentDate.toISOString().slice(0, 16)));
 
-  currentDate.setFullYear(currentDate.getFullYear() + 4);
+  currentDate.setFullYear(currentDate.getFullYear() + 1);
   const [futureDate, setFutureDate] = useState(dayjs(currentDate.toISOString().slice(0, 16)));
 
   const [campus, setCampus] = useState([]);
@@ -64,40 +53,11 @@ const FormRegister = ({ userType, ...others }) => {
 
   const [success, setSuccess] = useState(false);
 
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
-  const changePassword = (value) => {
-    const temp = strengthIndicator(value);
-    setStrength(temp);
-    setLevel(strengthColor(temp));
-  };
-
-  const customCampusValidation = (value) => {
-    return !((userType === 'Bolsista' || userType === 'Coordenador') && !value);
-  };
-
-  const customProjectValidation = (value) => {
-    return !((userType === 'Bolsista' || userType === 'Orientador') && !value);
-  };
-
-  useEffect(() => {
-    changePassword('123456');
-  }, []);
-
   let validationSchema = Yup.object().shape({
-    campus: Yup.string().test('custom-validation', 'O campus é obrigatório', customCampusValidation),
-    project: Yup.string().test('custom-validation', 'O projeto é obrigatório', customProjectValidation),
-    matriculation: Yup.string().max(255).required('A matrícula é obrigatória'),
-    username: Yup.string().max(255).required('O usuário é obrigatório'),
     name: Yup.string().max(255).required('O nome é obrigatório'),
-    email: Yup.string().email('O email deve ser válido').max(255).required('O email é obrigatório'),
-    password: Yup.string().max(255).required('A senha é obrigatória')
+    description: Yup.string().max(255).required('A descrição é obrigatória'),
+    campus: Yup.string().max(255).required('O campus é obrigatório'),
+    project: Yup.string().max(255).required('O projeto é obrigatório')
   });
 
   const fetchCampus = async () => {
@@ -111,29 +71,24 @@ const FormRegister = ({ userType, ...others }) => {
   };
 
   useEffect(() => {
-    changePassword('123456');
     fetchCampus();
     fetchProjects();
-  }, [userType]);
+  }, []);
 
   return (
     <>
       <Formik
         initialValues={{
+          name: '',
+          description: '',
           campus: '',
           project: '',
-          cargo: '',
-          matriculation: '',
-          username: '',
-          name: '',
-          email: '',
-          password: '',
           submit: null
         }}
         validationSchema={validationSchema}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
-            await postRegister({ userType, ...values, atualDate, futureDate });
+            await postRegister({ ...values, atualDate, futureDate });
             setStatus({ success: true });
             setSubmitting(false);
             setSuccess(true);
@@ -150,234 +105,8 @@ const FormRegister = ({ userType, ...others }) => {
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit} {...others} style={{ margin: '1rem 0' }}>
             <div style={{ margin: '15px 0px 10px 5px' }}>Dados Intitucionais</div>
-            {userType === 'Bolsista' && (
-              <>
-                <FormControl fullWidth error={Boolean(touched.campus && errors.campus)} style={{ margin: '8px 0' }}>
-                  <InputLabel id="demo-simple-select-label">Campus</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    name="campus"
-                    value={values.campus}
-                    label="Campus"
-                    onChange={handleChange}
-                  >
-                    {campus.map((campusItem) => (
-                      <MenuItem key={campusItem.id} value={campusItem.id}>
-                        {campusItem.nome}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {touched.campus && errors.campus && (
-                    <FormHelperText error id="standard-weight-helper-text--register">
-                      {errors.campus}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-
-                <FormControl fullWidth error={Boolean(touched.project && errors.project)} style={{ margin: '8px 0' }}>
-                  <InputLabel id="demo-simple-select-label">Projeto</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    name="project"
-                    value={values.project}
-                    label="Projeto"
-                    onChange={handleChange}
-                  >
-                    {projects.map((projectsItem) => (
-                      <MenuItem key={projectsItem.id} value={projectsItem.id}>
-                        {projectsItem.nome}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {touched.project && errors.project && (
-                    <FormHelperText error id="standard-weight-helper-text--register">
-                      {errors.project}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </>
-            )}
-
-            {userType === 'Orientador' && (
-              <>
-                <FormControl fullWidth error={Boolean(touched.campus && errors.campus)} style={{ margin: '8px 0' }}>
-                  <InputLabel id="demo-simple-select-label">Campus</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    name="campus"
-                    value={values.campus}
-                    label="Campus"
-                    onChange={handleChange}
-                  >
-                    {campus.map((campusItem) => (
-                      <MenuItem key={campusItem.id} value={campusItem.id}>
-                        {campusItem.nome}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {touched.campus && errors.campus && (
-                    <FormHelperText error id="standard-weight-helper-text--register">
-                      {errors.campus}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-
-                <FormControl fullWidth error={Boolean(touched.project && errors.project)} style={{ margin: '8px 0' }}>
-                  <InputLabel id="demo-simple-select-label">Projeto</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    name="project"
-                    value={values.project}
-                    label="Projeto"
-                    onChange={handleChange}
-                  >
-                    {projects.map((projectsItem) => (
-                      <MenuItem key={projectsItem.id} value={projectsItem.id}>
-                        {projectsItem.nome}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {touched.project && errors.project && (
-                    <FormHelperText error id="standard-weight-helper-text--register">
-                      {errors.project}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </>
-            )}
-
-            {userType === 'Coordenador' && (
-              <>
-                <FormControl fullWidth error={Boolean(touched.campus && errors.campus)} style={{ margin: '8px 0' }}>
-                  <InputLabel id="demo-simple-select-label">Campus</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    name="campus"
-                    value={values.campus}
-                    label="Campus"
-                    onChange={handleChange}
-                  >
-                    {campus.map((campusItem) => (
-                      <MenuItem key={campusItem.id} value={campusItem.id}>
-                        {campusItem.nome}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {touched.campus && errors.campus && (
-                    <FormHelperText error id="standard-weight-helper-text--register">
-                      {errors.campus}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </>
-            )}
-
-            {userType === 'Pró-Reitor' && (
-              <>
-                <FormControl fullWidth error={Boolean(touched.campus && errors.campus)} style={{ margin: '8px 0' }}>
-                  <InputLabel id="demo-simple-select-label">Campus</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    name="campus"
-                    value={values.campus}
-                    label="Campus"
-                    onChange={handleChange}
-                  >
-                    {campus.map((campusItem) => (
-                      <MenuItem key={campusItem.id} value={campusItem.id}>
-                        {campusItem.nome}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  {touched.campus && errors.campus && (
-                    <FormHelperText error id="standard-weight-helper-text--register">
-                      {errors.campus}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-
-                <FormControl fullWidth error={Boolean(touched.dateEnd && errors.dateEnd)}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']}>
-                      <DatePicker
-                        label="Data de Início"
-                        value={atualDate}
-                        onChange={(newValue) => setAtualDate(newValue)}
-                        sx={{ width: '100%', margin: '8px 0' }}
-                      />
-                    </DemoContainer>
-                  </LocalizationProvider>
-                </FormControl>
-
-                <FormControl fullWidth error={Boolean(touched.dateEnd && errors.dateEnd)}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']}>
-                      <DatePicker
-                        label="Data de Fim"
-                        value={futureDate}
-                        onChange={(newValue) => setFutureDate(newValue)}
-                        sx={{ width: '100%', margin: '8px 0' }}
-                      />
-                    </DemoContainer>
-                  </LocalizationProvider>
-                </FormControl>
-              </>
-            )}
-
-            <Grid container spacing={matchDownSM ? 0 : 2}>
-              <Grid item xs={12} sm={6}>
-                <FormControl
-                  fullWidth
-                  error={Boolean(touched.matriculation && errors.matriculation)}
-                  sx={{ ...theme.typography.customInput }}
-                >
-                  <InputLabel htmlFor="outlined-adornment-matriculation-register">Matrícula</InputLabel>
-                  <OutlinedInput
-                    id="outlined-adornment-matriculation-register"
-                    type="text"
-                    value={values.matriculation}
-                    name="matriculation"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    inputProps={{}}
-                  />
-                  {touched.matriculation && errors.matriculation && (
-                    <FormHelperText error id="standard-weight-helper-text--register">
-                      {errors.matriculation}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <FormControl fullWidth error={Boolean(touched.username && errors.username)} sx={{ ...theme.typography.customInput }}>
-                  <InputLabel htmlFor="outlined-adornment-username-register">Nome de Usuário</InputLabel>
-                  <OutlinedInput
-                    id="outlined-adornment-username-register"
-                    type="text"
-                    value={values.username}
-                    name="username"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    inputProps={{}}
-                  />
-                  {touched.username && errors.username && (
-                    <FormHelperText error id="standard-weight-helper-text--register">
-                      {errors.username}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              </Grid>
-            </Grid>
-
-            <div style={{ margin: '15px 0px 10px 5px' }}>Dados Pessoais</div>
             <FormControl fullWidth error={Boolean(touched.name && errors.name)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-name-register">Nome</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-name-register">Nome do Projeto</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-name-register"
                 type="text"
@@ -394,75 +123,101 @@ const FormRegister = ({ userType, ...others }) => {
               )}
             </FormControl>
 
-            <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-email-register">Email</InputLabel>
+            <FormControl fullWidth error={Boolean(touched.description && errors.description)} sx={{ ...theme.typography.customInput }}>
+              <InputLabel htmlFor="outlined-adornment-description-register">Descrição</InputLabel>
               <OutlinedInput
                 id="outlined-adornment-email-register"
-                type="email"
-                value={values.email}
-                name="email"
+                type="text"
+                value={values.description}
+                name="description"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 inputProps={{}}
               />
-              {touched.email && errors.email && (
+              {touched.description && errors.description && (
                 <FormHelperText error id="standard-weight-helper-text--register">
-                  {errors.email}
+                  {errors.description}
                 </FormHelperText>
               )}
             </FormControl>
 
-            <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-password-register">Senha</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password-register"
-                type={showPassword ? 'text' : 'password'}
-                value={values.password}
-                name="password"
-                label="Senha"
-                onBlur={handleBlur}
-                onChange={(e) => {
-                  handleChange(e);
-                  changePassword(e.target.value);
-                }}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                      size="large"
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                inputProps={{}}
-              />
-              {touched.password && errors.password && (
-                <FormHelperText error id="standard-weight-helper-text-password-register">
-                  {errors.password}
+            <Grid container spacing={matchDownSM ? 0 : 2}>
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth error={Boolean(touched.dateEnd && errors.dateEnd)}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}>
+                      <DatePicker
+                        label="Data de Início"
+                        value={atualDate}
+                        onChange={(newValue) => setAtualDate(newValue)}
+                        sx={{ width: '100%', margin: '8px 0' }}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} sm={6}>
+                <FormControl fullWidth error={Boolean(touched.dateEnd && errors.dateEnd)}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DatePicker']}>
+                      <DatePicker
+                        label="Data de Fim"
+                        value={futureDate}
+                        onChange={(newValue) => setFutureDate(newValue)}
+                        sx={{ width: '100%', margin: '8px 0' }}
+                      />
+                    </DemoContainer>
+                  </LocalizationProvider>
+                </FormControl>
+              </Grid>
+            </Grid>
+
+            <FormControl fullWidth error={Boolean(touched.campus && errors.campus)} style={{ margin: '8px 0' }}>
+              <InputLabel id="demo-simple-select-label">Campus</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                name="campus"
+                value={values.campus}
+                label="Projeto"
+                onChange={handleChange}
+              >
+                {campus.map((campusItem) => (
+                  <MenuItem key={campusItem.id} value={campusItem.id}>
+                    {campusItem.nome}
+                  </MenuItem>
+                ))}
+              </Select>
+              {touched.campus && errors.campus && (
+                <FormHelperText error id="standard-weight-helper-text--register">
+                  {errors.campus}
                 </FormHelperText>
               )}
             </FormControl>
 
-            {strength !== 0 && (
-              <FormControl fullWidth>
-                <Box sx={{ mb: 2 }}>
-                  <Grid container spacing={2} alignItems="center">
-                    <Grid item>
-                      <Box style={{ backgroundColor: level?.color }} sx={{ width: 85, height: 8, borderRadius: '7px' }} />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle1" fontSize="0.75rem">
-                        {level?.label}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </FormControl>
-            )}
+            <FormControl fullWidth error={Boolean(touched.project && errors.project)} style={{ margin: '8px 0' }}>
+              <InputLabel id="demo-simple-select-label">Projeto</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                name="project"
+                value={values.project}
+                label="Projeto"
+                onChange={handleChange}
+              >
+                {projects.map((projectsItem) => (
+                  <MenuItem key={projectsItem.id} value={projectsItem.id}>
+                    {projectsItem.nome}
+                  </MenuItem>
+                ))}
+              </Select>
+              {touched.project && errors.project && (
+                <FormHelperText error id="standard-weight-helper-text--register">
+                  {errors.project}
+                </FormHelperText>
+              )}
+            </FormControl>
 
             <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
               {errors.submit && (
@@ -477,7 +232,7 @@ const FormRegister = ({ userType, ...others }) => {
                 <Box sx={{ mt: 3 }}>
                   <FormHelperText style={{ color: 'green', textAlign: 'center' }}>Cadastro realizado com sucesso.</FormHelperText>
                   <FormHelperText style={{ color: 'green', textAlign: 'center' }}>
-                    Você será redirecionado para tela de login!
+                    Você será redirecionado para tela de ...?!
                   </FormHelperText>
                 </Box>
               )}
@@ -503,10 +258,6 @@ const FormRegister = ({ userType, ...others }) => {
       </Formik>
     </>
   );
-};
-
-FormRegister.propTypes = {
-  userType: PropTypes.string.isRequired
 };
 
 export default FormRegister;

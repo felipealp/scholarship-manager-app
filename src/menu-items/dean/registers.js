@@ -11,26 +11,26 @@ const registers = {
   caption: 'Controle de Usuários',
   children: [
     {
-      id: 'campus',
+      id: 'cadastro-de-campus',
       title: 'Cadastro de Campus',
       type: 'item',
-      url: '/cadastro/campus',
+      url: '/cadastro-de-campus',
       icon: icons.IconHomePlus,
       breadcrumbs: false
     },
     {
-      id: 'projeto',
+      id: 'cadastro-de-projeto',
       title: 'Cadastro de Projetos',
       type: 'item',
-      url: '/cadastro/projeto',
+      url: '/cadastro-de-projeto',
       icon: icons.IconTemperaturePlus,
       breadcrumbs: false
     },
     {
-      id: 'usuario',
+      id: 'cadastro-de-usuario',
       title: 'Cadastro de Usuários',
       type: 'item',
-      url: '/cadastro/usuario',
+      url: '/cadastro-de-usuario',
       icon: icons.IconUserPlus,
       breadcrumbs: false
     }

@@ -35,28 +35,23 @@ const MainRoutes = {
       path: '/',
       children: [
         {
-          path: 'cadastro',
+          path: 'cadastro-de-campus',
+          element: <CampusRegister />
+        },
+        {
+          path: 'cadastro-de-projeto',
+          element: <ProjectRegister />
+        },
+        {
+          path: 'cadastro-de-usuario',
           children: [
             {
-              path: 'campus',
-              element: <CampusRegister />
+              path: '',
+              element: <UserRegister />
             },
             {
-              path: 'projeto',
-              element: <ProjectRegister />
-            },
-            {
-              path: 'usuario',
-              children: [
-                {
-                  path: '',
-                  element: <UserRegister />
-                },
-                {
-                  path: ':tipo',
-                  element: <UserRegister />
-                }
-              ]
+              path: ':tipo',
+              element: <UserRegister />
             }
           ]
         },

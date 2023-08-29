@@ -10,7 +10,6 @@ const UserTypeRegister = () => {
   const [userType, setUserType] = useState('');
 
   const handleChange = (event) => {
-    console.log('aaaa', event)
     setUserType(event.target.value);
   };
 
