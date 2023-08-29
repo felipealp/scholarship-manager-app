@@ -1,26 +1,26 @@
 import { useState } from 'react';
 
 // material-ui
-import { Box, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from '@mui/material';
+import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 // project imports
 import FormRegister from './FormRegister';
 
-const AuthRegister = () => {
+const UserTypeRegister = () => {
   const [userType, setUserType] = useState('');
 
   const handleChange = (event) => {
+    console.log('aaaa', event)
     setUserType(event.target.value);
   };
 
-  const hasdad = () => {
+  const userTypeContent = () => {
     if (userType) {
       return <FormRegister userType={userType} />;
     } else {
       return (
         <div style={{ textAlign: 'center', margin: '20px', color: '#999999' }}>
-          Para prosseguir com o cadastro é importante selecionar esse campo considerando que o sistema fornece as funcionalidades de acordo
-          com o seu perfil
+          Para prosseguir com o cadastro é necessário selecionar o tipo de usuário que deseja cadastrar
         </div>
       );
     }
@@ -28,14 +28,6 @@ const AuthRegister = () => {
 
   return (
     <>
-      <Grid container direction="column" justifyContent="center" spacing={2}>
-        <Grid item xs={12} container alignItems="center" justifyContent="center">
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle1">Registre-se com os Dados Acadêmicos</Typography>
-          </Box>
-        </Grid>
-      </Grid>
-
       <div style={{ marginTop: '25px' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Tipo de Usuário</InputLabel>
@@ -54,9 +46,9 @@ const AuthRegister = () => {
         </FormControl>
       </div>
 
-      {hasdad()}
+      {userTypeContent()}
     </>
   );
 };
 
-export default AuthRegister;
+export default UserTypeRegister;
