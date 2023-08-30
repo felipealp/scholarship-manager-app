@@ -18,7 +18,7 @@ const UserTypeRegister = () => {
       return <FormRegister userType={userType} />;
     } else {
       return (
-        <div style={{ textAlign: 'center', margin: '20px', color: '#999999' }}>
+        <div style={{ textAlign: 'center', margin: '20px', color: '#364152' }}>
           Para prosseguir com o cadastro é necessário selecionar o tipo de usuário que deseja cadastrar
         </div>
       );
