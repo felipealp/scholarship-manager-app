@@ -6,6 +6,12 @@ import PropTypes from 'prop-types';
 import MainLayout from 'layout/MainLayout';
 import Loadable from 'components/Loadable';
 
+const Campus = Loadable(lazy(() => import('views/management/campus')));
+// const Campus = Loadable(lazy(() => import('views/management/campus')));
+// const Campus = Loadable(lazy(() => import('views/management/campus')));
+// const Campus = Loadable(lazy(() => import('views/management/campus')));
+// const Campus = Loadable(lazy(() => import('views/management/campus')));
+
 // registers routing
 const CampusRegister = Loadable(lazy(() => import('views/registers/campusRegister')));
 const ProjectRegister = Loadable(lazy(() => import('views/registers/projectRegister')));
@@ -35,46 +41,66 @@ const MainRoutes = {
       path: '/',
       children: [
         {
-          path: 'cadastro-de-campus',
-          element: <CampusRegister />
-        },
-        {
-          path: 'cadastro-de-projeto',
-          element: <ProjectRegister />
-        },
-        {
-          path: 'cadastro-de-usuario',
-          children: [
-            {
-              path: '',
-              element: <UserRegister />
-            },
-            {
-              path: ':tipo',
-              element: <UserRegister />
-            }
-          ]
-        },
-        {
           path: '',
           element: <Navigate to="/dashboard" />
         },
         {
           path: 'dashboard',
           element: <Dashboard />
+        }
+      ]
+    },
+    {
+      path: 'campus',
+      element: <Campus />
+    },
+    {
+      path: 'projetos',
+      element: <Campus />
+    },
+    {
+      path: 'bolsistas',
+      element: <Campus />
+    },
+    {
+      path: 'coordenadores',
+      element: <Campus />
+    },
+    {
+      path: 'pro-reitores',
+      element: <Campus />
+    },
+    {
+      path: 'cadastro-de-campus',
+      element: <CampusRegister />
+    },
+    {
+      path: 'cadastro-de-projeto',
+      element: <ProjectRegister />
+    },
+    {
+      path: 'cadastro-de-usuario',
+      children: [
+        {
+          path: '',
+          element: <UserRegister />
         },
         {
-          path: 'frequencia',
-          children: [
-            {
-              path: '',
-              element: <Frequency />
-            },
-            {
-              path: ':mes',
-              element: <Frequency />
-            }
-          ]
+          path: ':tipo',
+          element: <UserRegister />
+        }
+      ]
+    },
+    {
+      path: 'frequencia',
+      children: [
+        {
+          path: '',
+          element: <Frequency />
+        },
+        {
+          path: ':mes',
+          element: <Frequency />
         }
       ]
     },

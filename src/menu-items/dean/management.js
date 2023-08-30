@@ -14,39 +14,39 @@ const management = {
       id: 'campus',
       title: 'Campus',
       type: 'item',
-      url: '/cadastro',
+      url: '/campus',
       icon: icons.IconBuildingSkyscraper,
       breadcrumbs: false
     },
     {
-      id: 'projects',
+      id: 'projetos',
       title: 'Projetos',
       type: 'item',
-      url: '/cadastro',
+      url: '/projetos',
       icon: icons.IconClipboardData,
       breadcrumbs: false
     },
     {
-      id: 'students',
+      id: 'bolsistas',
       title: 'Bolsistas',
       type: 'item',
-      url: '/cadastro',
+      url: '/bolsistas',
       icon: icons.IconSchool,
       breadcrumbs: false
     },
     {
-      id: 'coordinators',
+      id: 'coordenadores',
       title: 'Coordenadores',
       type: 'item',
-      url: '/cadastro',
+      url: '/coordenadores',
       icon: icons.IconUsers,
       breadcrumbs: false
     },
     {
-      id: 'deans',
+      id: 'pro-reitores',
       title: 'Pró-Reitores',
       type: 'item',
-      url: '/cadastro',
+      url: '/pro-reitores',
       icon: icons.IconBrandApplePodcast,
       breadcrumbs: false
     }
