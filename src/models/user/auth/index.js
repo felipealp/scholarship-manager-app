@@ -1,41 +1,27 @@
 import { auth as requestAuth } from 'services/request';
 
-const authentication = async (data) => {
-  console.log(data);
-  // requisitar token
-  localStorage.setItem('user_token', '445545');
+const sessionStorage = (token) => {
+  localStorage.setItem('user_token', token);
   // requisitar whoami
-  localStorage.setItem('user_type', 'reitor');
-  const whoami = { userType: 'reitor', data: {} };
-  localStorage.setItem('whoami', JSON.stringify(whoami));
-  const auth = await requestAuth(data);
-  console.log('auth');
+  // localStorage.setItem('user_type', 'reitor');
+};
+
+const authentication = async (data) => {
+  const auth = await requestAuth({ username: data.login, password: data.password });
+
   if (auth.data) {
+    sessionStorage(auth.data);
     return auth.data;
+  } else if (auth.error.message) {
+    throw new Error(auth.error.message);
   }
 
   return auth;
-
-  // return new Promise((resolve, reject) => {
-  //   console.log('logar: ', data);
-  //   // Simulate an asynchronous operation
-  //   setTimeout(() => {
-  //     // if (data.login === 'felipe@email.com' && data.password === '123') {
-
-  //     if (data.password) {
-  //       // [armazenar token e redirecionar página]
-  //       console.log('autenticou');
-  //       localStorage.setItem('user_token', '445545');
-  //       resolve(`Success: Data processed - ${data}`);
-  //     } else {
-  //       reject({ message: 'Credenciais inválidas' });
-  //     }
-  //   }, 1000); // Simulating a delay of 1 second
-  // });
 };
 
 const logout = () => {
   localStorage.removeItem('user_token');
+  localStorage.removeItem('user_type');
   location.reload();
 };
 

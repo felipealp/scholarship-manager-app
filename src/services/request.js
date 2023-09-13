@@ -31,15 +31,19 @@ const post = (url, data) => {
   }
 };
 
-const auth = (data) => {
+const auth = async (data) => {
   try {
-    const response = axios.post('/auth-token/', data, {
+    const response = await axios.post('/api/auth-token/', data, {
       baseURL: configApi.url
     });
 
     return response;
   } catch (err) {
-    return { error: err };
+    return {
+      error: {
+        message: err.response.data.non_field_errors || 'Falha o realizar login.'
+      }
+    };
   }
 };
 
