@@ -62,7 +62,7 @@ const List = ({ title, columns, rows }) => {
     ...columns,
     {
       field: 'actions',
-      headerName: 'Ações',
+      headerName: 'Menu de Ações',
       width: 200,
       flex: 1,
       align: 'right',
@@ -112,6 +112,8 @@ const List = ({ title, columns, rows }) => {
       <div style={{ height: 400, width: '100%' }}>
         <DataGrid
           rows={filteredRows}
+          rowHeight={40}
+          autoHeight
           columns={columnsWithActions}
           initialState={{
             pagination: {
