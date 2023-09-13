@@ -13,7 +13,7 @@ import { Formik } from 'formik';
 import AnimateButton from 'components/extended/AnimateButton';
 
 // models
-import { postRegister } from 'models/campus/register';
+import { postRegister } from 'models/campus';
 
 const FormRegister = ({ ...others }) => {
   const theme = useTheme();

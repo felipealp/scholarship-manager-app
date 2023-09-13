@@ -34,7 +34,7 @@ import { Formik } from 'formik';
 import AnimateButton from 'components/extended/AnimateButton';
 
 // models
-import { getCampus, getProjects, postRegister } from 'models/project/register';
+import { getCampus, getProjects, postRegister } from 'models/project';
 
 const FormRegister = ({ ...others }) => {
   const theme = useTheme();
