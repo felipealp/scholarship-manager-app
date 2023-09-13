@@ -7,10 +7,10 @@ import MainLayout from 'layout/MainLayout';
 import Loadable from 'components/Loadable';
 
 const Campus = Loadable(lazy(() => import('views/management/campus')));
-// const Campus = Loadable(lazy(() => import('views/management/campus')));
-// const Campus = Loadable(lazy(() => import('views/management/campus')));
-// const Campus = Loadable(lazy(() => import('views/management/campus')));
-// const Campus = Loadable(lazy(() => import('views/management/campus')));
+const Project = Loadable(lazy(() => import('views/management/project')));
+const Student = Loadable(lazy(() => import('views/management/student')));
+const Coordinator = Loadable(lazy(() => import('views/management/coordinator')));
+const Dean = Loadable(lazy(() => import('views/management/dean')));
 
 // registers routing
 const CampusRegister = Loadable(lazy(() => import('views/registers/campusRegister')));
@@ -56,19 +56,19 @@ const MainRoutes = {
     },
     {
       path: 'projetos',
-      element: <Campus />
+      element: <Project />
     },
     {
       path: 'bolsistas',
-      element: <Campus />
+      element: <Student />
     },
     {
       path: 'coordenadores',
-      element: <Campus />
+      element: <Coordinator />
     },
     {
       path: 'pro-reitores',
-      element: <Campus />
+      element: <Dean />
     },
     {
       path: 'cadastro-de-campus',
