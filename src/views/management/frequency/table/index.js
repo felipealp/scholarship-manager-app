@@ -7,7 +7,6 @@ import './style.scss';
 
 // project imports
 import MainCard from 'components/cards/MainCard';
-
 import SkeletonEarningCard from 'components/cards/Skeleton/EarningCard';
 
 const Table = () => {
