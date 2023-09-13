@@ -109,7 +109,7 @@ const List = ({ title, columns, rows }) => {
           <Add style={{ color: 'white' }} />
         </IconButton>
       </div>
-      <div style={{ height: 400, width: '100%' }}>
+      <div style={{ height: 'auto', width: '100%' }}>
         <DataGrid
           rows={filteredRows}
           rowHeight={40}
