@@ -9,6 +9,7 @@ import Loadable from 'components/Loadable';
 const Campus = Loadable(lazy(() => import('views/management/campus')));
 const Project = Loadable(lazy(() => import('views/management/project')));
 const Student = Loadable(lazy(() => import('views/management/student')));
+const Advisor = Loadable(lazy(() => import('views/management/advisor')));
 const Coordinator = Loadable(lazy(() => import('views/management/coordinator')));
 const Dean = Loadable(lazy(() => import('views/management/dean')));
 
@@ -61,6 +62,10 @@ const MainRoutes = {
     {
       path: 'bolsistas',
       element: <Student />
+    },
+    {
+      path: 'orientadores',
+      element: <Advisor />
     },
     {
       path: 'coordenadores',
