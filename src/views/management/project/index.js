@@ -45,7 +45,7 @@ const Project = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <List title="Lista de Projetos" columns={columns} rows={projects} />
+        <List title="Lista de Projetos" urlRegister="/cadastro-de-projeto" columns={columns} rows={projects} />
       </Grid>
     </Grid>
   );

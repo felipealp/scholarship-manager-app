@@ -42,7 +42,7 @@ const Campus = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <List title="Lista de Campus" columns={columns} rows={campus} />
+        <List title="Lista de Campus" urlRegister="/cadastro-de-campus" columns={columns} rows={campus} />
       </Grid>
     </Grid>
   );

@@ -77,11 +77,29 @@ const MainRoutes = {
     },
     {
       path: 'cadastro-de-campus',
-      element: <CampusRegister />
+      children: [
+        {
+          path: '',
+          element: <CampusRegister />
+        },
+        {
+          path: ':id',
+          element: <CampusRegister />
+        }
+      ]
     },
     {
       path: 'cadastro-de-projeto',
-      element: <ProjectRegister />
+      children: [
+        {
+          path: '',
+          element: <ProjectRegister />
+        },
+        {
+          path: ':id',
+          element: <ProjectRegister />
+        }
+      ]
     },
     {
       path: 'cadastro-de-usuario',
