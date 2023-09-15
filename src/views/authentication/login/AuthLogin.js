@@ -79,7 +79,7 @@ const AuthLogin = ({ ...others }) => {
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             await authentication(values);
-            navigate('/');
+            navigate(0);
             setStatus({ success: true });
             setSubmitting(false);
           } catch (err) {
