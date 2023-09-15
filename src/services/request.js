@@ -41,7 +41,7 @@ const auth = async (data) => {
   } catch (err) {
     return {
       error: {
-        message: err.response.data.non_field_errors || 'Falha o realizar login.'
+        message: err.response.data.error || 'Falha o realizar login.'
       }
     };
   }
