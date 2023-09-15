@@ -1,8 +1,8 @@
 // assets
-import { IconBuildingSkyscraper, IconClipboardData, IconSchool, IconUsers, IconBrandApplePodcast } from '@tabler/icons';
+import { IconClipboardData, IconSchool, IconUser, IconBrandApplePodcast } from '@tabler/icons';
 
 // constant
-const icons = { IconBuildingSkyscraper, IconClipboardData, IconSchool, IconUsers, IconBrandApplePodcast };
+const icons = { IconClipboardData, IconSchool, IconUser, IconBrandApplePodcast };
 
 const management = {
   id: 'management',
@@ -10,14 +10,6 @@ const management = {
   type: 'group',
   caption: 'Controle de Instituições',
   children: [
-    {
-      id: 'campus',
-      title: 'Campus',
-      type: 'item',
-      url: '/campus',
-      icon: icons.IconBuildingSkyscraper,
-      breadcrumbs: false
-    },
     {
       id: 'projetos',
       title: 'Projetos',
@@ -35,21 +27,13 @@ const management = {
       breadcrumbs: false
     },
     {
-      id: 'coordenadores',
-      title: 'Coordenadores',
+      id: 'orientadores',
+      title: 'Orientadores',
       type: 'item',
-      url: '/coordenadores',
-      icon: icons.IconUsers,
+      url: '/orientadores',
+      icon: icons.IconUser,
       breadcrumbs: false
     },
-    {
-      id: 'pro-reitores',
-      title: 'Pró-Reitores',
-      type: 'item',
-      url: '/pro-reitores',
-      icon: icons.IconBrandApplePodcast,
-      breadcrumbs: false
-    }
   ]
 };
 

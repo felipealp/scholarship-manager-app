@@ -11,14 +11,6 @@ const registers = {
   caption: 'Controle de Usuários',
   children: [
     {
-      id: 'cadastro-de-campus',
-      title: 'Cadastro de Campus',
-      type: 'item',
-      url: '/cadastro-de-campus',
-      icon: icons.IconHomePlus,
-      breadcrumbs: false
-    },
-    {
       id: 'cadastro-de-projeto',
       title: 'Cadastro de Projetos',
       type: 'item',

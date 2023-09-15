@@ -3,7 +3,7 @@ import other from './reports';
 
 // student
 import studentManagement from './student/management';
-import studentRegisters from './student/registers';
+import studentReports from './student/reports';
 
 // advisor
 import advisorManagement from './advisor/management';
@@ -23,7 +23,7 @@ let menuItems;
 
 if (userType === 'Bolsista') {
   menuItems = {
-    items: [studentManagement, studentRegisters]
+    items: [studentManagement, studentReports]
   };
 } else if (userType === 'Orientador') {
   menuItems = {

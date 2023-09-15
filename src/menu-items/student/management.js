@@ -1,56 +1,34 @@
 // assets
-import { IconBuildingSkyscraper, IconClipboardData, IconSchool, IconUsers, IconBrandApplePodcast } from '@tabler/icons';
+import { IconDashboard, IconSchool, IconClipboardList } from '@tabler/icons';
 
 // constant
-const icons = { IconBuildingSkyscraper, IconClipboardData, IconSchool, IconUsers, IconBrandApplePodcast };
+const icons = { IconDashboard, IconSchool, IconClipboardList };
 
-const management = {
-  id: 'management',
+// ==============================|| DASHBOARD MENU ITEMS ||============================== //
+
+const dashboard = {
+  id: 'dashboard',
   title: 'Gerenciamento',
   type: 'group',
-  caption: 'Controle de Instituições',
+  caption: 'Controle de Bolsa Acadêmica',
   children: [
     {
-      id: 'campus',
-      title: 'Campus',
+      id: 'pesquisa',
+      title: 'Dados da Bolsa',
       type: 'item',
-      url: '/campus',
-      icon: icons.IconBuildingSkyscraper,
-      breadcrumbs: false
-    },
-    {
-      id: 'projetos',
-      title: 'Projetos',
-      type: 'item',
-      url: '/projetos',
-      icon: icons.IconClipboardData,
-      breadcrumbs: false
-    },
-    {
-      id: 'bolsistas',
-      title: 'Bolsistas',
-      type: 'item',
-      url: '/bolsistas',
+      url: '/pesquisa',
       icon: icons.IconSchool,
       breadcrumbs: false
     },
     {
-      id: 'coordenadores',
-      title: 'Coordenadores',
+      id: 'frequencia',
+      title: 'Frequência',
       type: 'item',
-      url: '/coordenadores',
-      icon: icons.IconUsers,
-      breadcrumbs: false
-    },
-    {
-      id: 'pro-reitores',
-      title: 'Pró-Reitores',
-      type: 'item',
-      url: '/pro-reitores',
-      icon: icons.IconBrandApplePodcast,
+      url: '/frequencia',
+      icon: icons.IconClipboardList,
       breadcrumbs: false
     }
   ]
 };
 
-export default management;
+export default dashboard;
