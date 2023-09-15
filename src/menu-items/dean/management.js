@@ -1,8 +1,8 @@
 // assets
-import { IconBuildingSkyscraper, IconClipboardData, IconSchool, IconUsers, IconBrandApplePodcast } from '@tabler/icons';
+import { IconBuildingSkyscraper, IconClipboardData, IconSchool, IconUser, IconUsers, IconBrandApplePodcast } from '@tabler/icons';
 
 // constant
-const icons = { IconBuildingSkyscraper, IconClipboardData, IconSchool, IconUsers, IconBrandApplePodcast };
+const icons = { IconBuildingSkyscraper, IconClipboardData, IconSchool, IconUser, IconUsers, IconBrandApplePodcast };
 
 const management = {
   id: 'management',
@@ -32,6 +32,14 @@ const management = {
       type: 'item',
       url: '/bolsistas',
       icon: icons.IconSchool,
+      breadcrumbs: false
+    },
+    {
+      id: 'orientadores',
+      title: 'Orientadores',
+      type: 'item',
+      url: '/orientadores',
+      icon: icons.IconUser,
       breadcrumbs: false
     },
     {
