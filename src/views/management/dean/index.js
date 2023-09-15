@@ -42,7 +42,7 @@ const Dean = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <List title="Lista de Pró-Reitores" columns={columns} rows={deans} />
+        <List title="Lista de Pró-Reitores" urlRegister="/cadastro-de-usuario" columns={columns} rows={deans} />
       </Grid>
     </Grid>
   );

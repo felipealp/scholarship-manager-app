@@ -13,7 +13,7 @@ import Delete from '@mui/icons-material/Delete';
 // project imports
 import MainCard from 'components/cards/MainCard';
 
-const List = ({ title, columns, rows }) => {
+const List = ({ title, urlRegister, columns, rows }) => {
   const [searchText, setSearchText] = useState('');
 
   const filteredRows = rows.filter((row) =>
@@ -25,7 +25,7 @@ const List = ({ title, columns, rows }) => {
   };
 
   const handleEditClick = (item) => {
-    window.location.href = `sua-url-de-edicao-aqui/${item.id}`;
+    window.location.href = `${urlRegister}/${item.id}`;
   };
 
   const handleDeleteClick = (item) => {
@@ -103,7 +103,7 @@ const List = ({ title, columns, rows }) => {
           style={{ backgroundColor: '#1e88e5', marginLeft: '16px' }}
           aria-label="Adicionar"
           onClick={() => {
-            window.location.href = 'sua-url-de-adicionar-aqui';
+            window.location.href = urlRegister;
           }}
         >
           <Add style={{ color: 'white' }} />
@@ -135,6 +135,7 @@ const List = ({ title, columns, rows }) => {
 
 List.propTypes = {
   title: PropTypes.string,
+  urlRegister: PropTypes.string,
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       field: PropTypes.string,

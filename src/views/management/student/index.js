@@ -16,8 +16,9 @@ const Student = () => {
   const [students, setStudents] = useState([]);
 
   const columns = [
-    { field: 'nome', headerName: 'Nome', flex: 1 },
-    { field: 'endereco', headerName: 'Endereço', flex: 1 }
+    { field: 'matricula', headerName: 'Matrícula', renderCell: (params) => params.row.user.matricula, flex: 1 },
+    { field: 'name', headerName: 'Nome', renderCell: (params) => params.row.user.name, flex: 1 },
+    { field: 'email', headerName: 'Email', renderCell: (params) => params.row.user.email, flex: 1 }
   ];
 
   const requestGetStudents = async () => {
@@ -42,7 +43,7 @@ const Student = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <List title="Lista de Bolsistas" columns={columns} rows={students} />
+        <List title="Lista de Bolsistas" urlRegister="/cadastro-de-usuario" columns={columns} rows={students} />
       </Grid>
     </Grid>
   );

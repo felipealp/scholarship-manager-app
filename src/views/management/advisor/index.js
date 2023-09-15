@@ -43,7 +43,7 @@ const Advisor = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <List title="Lista de Orientadores" columns={columns} rows={advisors} />
+        <List title="Lista de Orientadores" urlRegister="/cadastro-de-usuario" columns={columns} rows={advisors} />
       </Grid>
     </Grid>
   );

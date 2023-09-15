@@ -43,7 +43,7 @@ const Coordinator = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <List title="Lista de Coordenadores" columns={columns} rows={coordinators} />
+        <List title="Lista de Coordenadores" urlRegister="/cadastro-de-usuario" columns={columns} rows={coordinators} />
       </Grid>
     </Grid>
   );
