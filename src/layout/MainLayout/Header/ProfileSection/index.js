@@ -28,10 +28,9 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 // project imports
 import MainCard from 'components/cards/MainCard';
 import Transitions from 'components/extended/Transitions';
-import User1 from 'assets/images/users/user-round.svg';
 
 // models
-import { logout } from 'models/user/auth';
+import { getWhosIsMe, logout } from 'models/user/auth';
 
 // assets
 import { IconLogout, IconSettings, IconUser } from '@tabler/icons';
@@ -42,6 +41,15 @@ const ProfileSection = () => {
   const theme = useTheme();
   const customization = useSelector((state) => state.customization);
   const navigate = useNavigate();
+
+  const userType = localStorage.getItem("user_type");
+  const [userData, setUserData] = useState(false);
+
+  const getUserData = async () => {
+    const user = await getWhosIsMe();
+    setUserData(user);
+  }
+  
 
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
@@ -79,6 +87,7 @@ const ProfileSection = () => {
       anchorRef.current.focus();
     }
 
+    getUserData();
     prevOpen.current = open;
   }, [open]);
 
@@ -105,18 +114,7 @@ const ProfileSection = () => {
           }
         }}
         icon={
-          <Avatar
-            src={User1}
-            sx={{
-              ...theme.typography.mediumAvatar,
-              margin: '8px 0 8px 8px !important',
-              cursor: 'pointer'
-            }}
-            ref={anchorRef}
-            aria-controls={open ? 'menu-list-grow' : undefined}
-            aria-haspopup="true"
-            color="inherit"
-          />
+          <Avatar />
         }
         label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
         variant="outlined"
@@ -154,10 +152,10 @@ const ProfileSection = () => {
                       <Stack direction="row" spacing={0.5} alignItems="center">
                         <Typography variant="h4">Olá,</Typography>
                         <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                          Johne Doe
+                          {userData.name}
                         </Typography>
                       </Stack>
-                      <Typography variant="subtitle2">Módulo do Aluno</Typography>
+                      <Typography variant="subtitle2">Módulo de {userType}</Typography>
                     </Stack>
                   </Box>
                   <Divider />
@@ -178,16 +176,6 @@ const ProfileSection = () => {
                       >
                         <ListItemButton
                           sx={{ borderRadius: `${customization.borderRadius}px` }}
-                          selected={selectedIndex === 0}
-                          onClick={(event) => handleListItemClick(event, 0, '#')}
-                        >
-                          <ListItemIcon>
-                            <IconSettings stroke={1.5} size="1.3rem" />
-                          </ListItemIcon>
-                          <ListItemText primary={<Typography variant="body2">Configurações da Conta</Typography>} />
-                        </ListItemButton>
-                        <ListItemButton
-                          sx={{ borderRadius: `${customization.borderRadius}px` }}
                           selected={selectedIndex === 1}
                           onClick={(event) => handleListItemClick(event, 1, '#')}
                         >
@@ -200,7 +188,7 @@ const ProfileSection = () => {
                                 <Grid item>
                                   <Typography variant="body2">Dados do Perfil</Typography>
                                 </Grid>
-                                <Grid item>
+                                {/* <Grid item>
                                   <Chip
                                     label="02"
                                     size="small"
@@ -209,7 +197,7 @@ const ProfileSection = () => {
                                       color: theme.palette.background.default
                                     }}
                                   />
-                                </Grid>
+                                </Grid> */}
                               </Grid>
                             }
                           />
