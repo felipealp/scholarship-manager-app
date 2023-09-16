@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -11,8 +11,6 @@ import {
   FormHelperText,
   MenuItem,
   Select,
-  // TextField,
-  // Autocomplete,
   InputLabel,
   OutlinedInput,
   Stack,
@@ -32,57 +30,85 @@ import { Formik } from 'formik';
 
 // project imports
 import AnimateButton from 'layout/extended/AnimateButton';
+import Toast from 'components/toast';
+import SkeletonEarningCard from 'components/Skeleton';
 
 // models
-import { getCampus, getProjects, postRegister } from 'models/project';
+import { getAll as getAllCampus } from 'models/campus';
+import { getAll as getAllCoordinators } from 'models/coordinator';
+import { getRegister, postRegister } from 'models/project';
 
 const FormRegister = ({ ...others }) => {
   const theme = useTheme();
+  const { id } = useParams();
   const navigate = useNavigate();
 
-  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
+  const [isLoading, setIsLoading] = useState(true);
+  const [success, setSuccess] = useState(false);
+  const [campus, setCampus] = useState([]);
+  const [project, setProject] = useState({});
+  const [coordinators, setCoordinators] = useState([]);
 
+  // dates
+  const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const currentDate = new Date();
   const [atualDate, setAtualDate] = useState(dayjs(currentDate.toISOString().slice(0, 16)));
-
   currentDate.setFullYear(currentDate.getFullYear() + 1);
   const [futureDate, setFutureDate] = useState(dayjs(currentDate.toISOString().slice(0, 16)));
 
-  const [campus, setCampus] = useState([]);
-  const [projects, setProjects] = useState([]);
+  const requestGetCampus = async () => {
+    const data = await getAllCampus();
+    setCampus(data);
+  };
 
-  const [success, setSuccess] = useState(false);
+  const requestGetCoordinators = async () => {
+    const data = await getAllCoordinators();
+    setCoordinators(data);
+  };
+
+  const requestProjectRegister = async () => {
+    if (id) {
+      const data = await getRegister(id);
+      setProject(data);
+
+      const startDate = new Date(data.data_inicio);
+      const endDate = new Date(data.data_fim);
+      setAtualDate(dayjs(startDate.toISOString().slice(0, 16)));
+      setFutureDate(dayjs(endDate.toISOString().slice(0, 16)));
+
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    requestGetCampus();
+    requestGetCoordinators();
+    requestProjectRegister();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   let validationSchema = Yup.object().shape({
     name: Yup.string().max(255).required('O nome é obrigatório'),
     description: Yup.string().max(255).required('A descrição é obrigatória'),
     campus: Yup.string().max(255).required('O campus é obrigatório'),
-    project: Yup.string().max(255).required('O projeto é obrigatório')
+    coordinator: Yup.string().max(255).required('O coordenador é obrigatório')
   });
 
-  const fetchCampus = async () => {
-    const campusColection = await getCampus();
-    setCampus(campusColection);
-  };
-
-  const fetchProjects = async () => {
-    const projectColection = await getProjects();
-    setProjects(projectColection);
-  };
-
-  useEffect(() => {
-    fetchCampus();
-    fetchProjects();
-  }, []);
+  if (isLoading) {
+    return <SkeletonEarningCard />;
+  }
 
   return (
     <>
       <Formik
         initialValues={{
-          name: '',
-          description: '',
-          campus: '',
-          project: '',
+          id: project.id || '',
+          name: project.nome || '',
+          description: project.descricao || '',
+          campus: project.campus || '',
+          coordinator: project.coordenador || '',
           submit: null
         }}
         validationSchema={validationSchema}
@@ -93,8 +119,8 @@ const FormRegister = ({ ...others }) => {
             setSubmitting(false);
             setSuccess(true);
             setTimeout(() => {
-              navigate('/');
-            }, 5000);
+              navigate('/projetos');
+            }, 2000);
           } catch (err) {
             setStatus({ success: false });
             setErrors({ submit: err.message });
@@ -196,25 +222,25 @@ const FormRegister = ({ ...others }) => {
               )}
             </FormControl>
 
-            <FormControl fullWidth error={Boolean(touched.project && errors.project)} style={{ margin: '8px 0' }}>
-              <InputLabel id="demo-simple-select-label">Projeto</InputLabel>
+            <FormControl fullWidth error={Boolean(touched.coordinator && errors.coordinator)} style={{ margin: '8px 0' }}>
+              <InputLabel id="demo-simple-select-label">Coordenador</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                name="project"
-                value={values.project}
-                label="Projeto"
+                name="coordinator"
+                value={values.coordinator}
+                label="Coordenador"
                 onChange={handleChange}
               >
-                {projects.map((projectsItem) => (
-                  <MenuItem key={projectsItem.id} value={projectsItem.id}>
-                    {projectsItem.nome}
+                {coordinators.map((coordinatorsItem) => (
+                  <MenuItem key={coordinatorsItem.id} value={coordinatorsItem.id}>
+                    {coordinatorsItem.user.name}
                   </MenuItem>
                 ))}
               </Select>
-              {touched.project && errors.project && (
+              {touched.coordinator && errors.coordinator && (
                 <FormHelperText error id="standard-weight-helper-text--register">
-                  {errors.project}
+                  {errors.coordinator}
                 </FormHelperText>
               )}
             </FormControl>
@@ -223,6 +249,12 @@ const FormRegister = ({ ...others }) => {
               {errors.submit && (
                 <Box sx={{ mt: 3 }}>
                   <FormHelperText error>{errors.submit}</FormHelperText>
+                  <Toast
+                    type="error"
+                    message={`Projeto não foi ${project.id ? 'atualizado' : 'cadastrado'}!`}
+                    open={true}
+                    handleClose={() => {}}
+                  />
                 </Box>
               )}
             </Stack>
@@ -232,8 +264,14 @@ const FormRegister = ({ ...others }) => {
                 <Box sx={{ mt: 3 }}>
                   <FormHelperText style={{ color: 'green', textAlign: 'center' }}>Cadastro realizado com sucesso.</FormHelperText>
                   <FormHelperText style={{ color: 'green', textAlign: 'center' }}>
-                    Você será redirecionado para tela de ...?!
+                    Você será redirecionado para tela de Listagem!
                   </FormHelperText>
+                  <Toast
+                    type="success"
+                    message={`Projeto ${project.id ? 'atualizado' : 'cadastrado'} com sucesso!`}
+                    open={true}
+                    handleClose={() => {}}
+                  />
                 </Box>
               )}
             </Stack>
@@ -249,7 +287,7 @@ const FormRegister = ({ ...others }) => {
                   variant="contained"
                   color="secondary"
                 >
-                  Cadastrar
+                  {project.id ? 'Atualizar' : 'Cadastrar'}
                 </Button>
               </AnimateButton>
             </Box>

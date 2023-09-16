@@ -19,8 +19,8 @@ import { getRegister, postRegister } from 'models/campus';
 
 const FormRegister = ({ ...others }) => {
   const theme = useTheme();
-  const navigate = useNavigate();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(true);
   const [success, setSuccess] = useState(false);
@@ -38,7 +38,8 @@ const FormRegister = ({ ...others }) => {
 
   useEffect(() => {
     requestCampusRegister();
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   let validationSchema = Yup.object().shape({
     name: Yup.string().max(255).required('O nome é obrigatório'),

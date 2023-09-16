@@ -57,7 +57,7 @@ const Campus = () => {
       <Grid item xs={12}>
         <Toast
           type="success"
-          message={`Campus foi apagado!`}
+          message={`Campus apagado com sucesso!`}
           open={toastSuccess}
           handleClose={() => {
             setToastSuccess(false);
@@ -65,7 +65,7 @@ const Campus = () => {
         />
         <Toast
           type="error"
-          message={`Campus não foi apagado!`}
+          message={`Campus não pôde ser apagado!`}
           open={toastError}
           handleClose={() => {
             setToastError(false);

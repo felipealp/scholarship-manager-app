@@ -1,4 +1,5 @@
 import { get, post, patch, remove } from 'services/request';
+import { getStringDate } from 'utils/dates';
 
 const getAll = async () => {
   const registers = await get('/projetos');
@@ -21,7 +22,15 @@ const getRegister = async (id, data) => {
 };
 
 const postRegister = async (data) => {
-  const dataFormatted = { nome: data.name, endereco: data.address };
+  console.log(data)
+  const dataFormatted = {
+    nome: data.name,
+    descricao: data.description,
+    campus: data.campus,
+    coordenador: data.coordinator,
+    data_inicio: getStringDate(data.atualDate),
+    data_fim: getStringDate(data.futureDate)
+  };
 
   if (data.id) return patchRegister(data.id, dataFormatted);
 
