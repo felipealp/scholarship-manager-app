@@ -86,8 +86,8 @@ const List = ({ title, urlRegister, handleDelete, columns, rows }) => {
             <Delete />
           </IconButton>
         </div>
-      ),
-    },
+      )
+    }
   ];
 
   return (
@@ -114,7 +114,7 @@ const List = ({ title, urlRegister, handleDelete, columns, rows }) => {
                 <Search color="action" />
               </InputAdornment>
             ),
-            style: { borderRadius: '8px', color: 'white' },
+            style: { borderRadius: '8px', color: 'white' }
           }}
           fullWidth
         />

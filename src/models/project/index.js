@@ -22,7 +22,6 @@ const getRegister = async (id, data) => {
 };
 
 const postRegister = async (data) => {
-  console.log(data)
   const dataFormatted = {
     nome: data.name,
     descricao: data.description,

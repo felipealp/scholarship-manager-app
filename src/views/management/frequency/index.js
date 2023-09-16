@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 // material-ui
 import { Grid } from '@mui/material';
 
-import Table from './table'
+import Table from './table';
 import { gridSpacing } from 'store/constant';
 
 // ============================== Frequency Page ============================== //
@@ -12,10 +12,11 @@ const Dashboard = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(isLoading)
-    setTimeout(function() {
+    console.log(isLoading);
+    setTimeout(function () {
       setLoading(false);
     }, 2000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

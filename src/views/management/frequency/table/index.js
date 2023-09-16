@@ -53,7 +53,7 @@ const Table = () => {
         <MainCard title="Frequência">
           <div>
             <label htmlFor="month">Mês: </label>
-            <select value={month} onChange={e => handleMonth(e.target.value)}>
+            <select value={month} onChange={(e) => handleMonth(e.target.value)}>
               <option value="janeiro">janeiro</option>
               <option value="fevereiro">fevereiro</option>
               <option value="março">março</option>

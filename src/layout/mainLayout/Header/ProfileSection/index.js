@@ -42,14 +42,13 @@ const ProfileSection = () => {
   const customization = useSelector((state) => state.customization);
   const navigate = useNavigate();
 
-  const userType = localStorage.getItem("user_type");
+  const userType = localStorage.getItem('user_type');
   const [userData, setUserData] = useState(false);
 
   const getUserData = async () => {
     const user = await getWhosIsMe();
     setUserData(user);
-  }
-  
+  };
 
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [open, setOpen] = useState(false);
@@ -113,9 +112,7 @@ const ProfileSection = () => {
             lineHeight: 0
           }
         }}
-        icon={
-          <Avatar />
-        }
+        icon={<Avatar />}
         label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.primary.main} />}
         variant="outlined"
         ref={anchorRef}
@@ -188,16 +185,6 @@ const ProfileSection = () => {
                                 <Grid item>
                                   <Typography variant="body2">Dados do Perfil</Typography>
                                 </Grid>
-                                {/* <Grid item>
-                                  <Chip
-                                    label="02"
-                                    size="small"
-                                    sx={{
-                                      bgcolor: theme.palette.warning.dark,
-                                      color: theme.palette.background.default
-                                    }}
-                                  />
-                                </Grid> */}
                               </Grid>
                             }
                           />

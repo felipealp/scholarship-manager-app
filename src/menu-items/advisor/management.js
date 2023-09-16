@@ -33,7 +33,7 @@ const management = {
       url: '/orientadores',
       icon: icons.IconUser,
       breadcrumbs: false
-    },
+    }
   ]
 };
 

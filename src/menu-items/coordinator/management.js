@@ -49,7 +49,7 @@ const management = {
       url: '/coordenadores',
       icon: icons.IconUsers,
       breadcrumbs: false
-    },
+    }
   ]
 };
 
