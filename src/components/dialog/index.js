@@ -12,7 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const Dialog = ({ open, title, text, handleClose, handleConfirm }) => {
+const Dialog = ({ title, text, open, handleClose, handleConfirm }) => {
   return (
     <div>
       <DialogCompopnent
@@ -38,18 +38,11 @@ const Dialog = ({ open, title, text, handleClose, handleConfirm }) => {
 };
 
 Dialog.propTypes = {
-  open: PropTypes.bool,
   title: PropTypes.string,
   text: PropTypes.string,
+  open: PropTypes.bool,
   handleClose: PropTypes.func,
-  handleConfirm: PropTypes.func,
-  columns: PropTypes.arrayOf(
-    PropTypes.shape({
-      field: PropTypes.string,
-      headerName: PropTypes.string
-    })
-  ),
-  rows: PropTypes.arrayOf(PropTypes.object)
+  handleConfirm: PropTypes.func
 };
 
 export default Dialog;
