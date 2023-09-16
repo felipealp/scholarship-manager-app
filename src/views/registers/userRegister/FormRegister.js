@@ -34,7 +34,7 @@ import { Formik } from 'formik';
 
 // project imports
 import AnimateButton from 'layout/extended/AnimateButton';
-import { strengthColor, strengthIndicator } from 'utils/password-strength';
+import { strengthColor, strengthIndicator } from 'utils/passwordStrength';
 
 // models
 import { getCampus, getProjects, postRegister } from 'models/user/register';
