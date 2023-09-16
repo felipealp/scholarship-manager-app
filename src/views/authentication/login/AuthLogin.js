@@ -24,7 +24,7 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
-import AnimateButton from 'components/extended/AnimateButton';
+import AnimateButton from 'layout/extended/AnimateButton';
 
 // models
 import { authentication } from 'models/user/auth';

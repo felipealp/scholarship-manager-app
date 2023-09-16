@@ -27,7 +27,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // project imports
 import MainCard from 'components/cards';
-import Transitions from 'components/extended/Transitions';
+import Transitions from 'layout/extended/Transitions';
 
 // models
 import { getWhosIsMe, logout } from 'models/user/auth';
