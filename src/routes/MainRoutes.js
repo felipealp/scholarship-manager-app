@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // project imports
 import MainLayout from 'layout/MainLayout';
-import Loadable from 'components/Loadable';
+import Loadable from 'components/loadable';
 
 const Campus = Loadable(lazy(() => import('views/management/campus')));
 const Project = Loadable(lazy(() => import('views/management/project')));

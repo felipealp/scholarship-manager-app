@@ -8,7 +8,7 @@ import { Grid, Stack, Typography, useMediaQuery, Link as LinkMui } from '@mui/ma
 // project imports
 import AuthCardWrapper from 'components/auth';
 import AuthLogin from './AuthLogin';
-import Logo from 'components/Logo';
+import Logo from 'components/logo';
 
 const Login = () => {
   const theme = useTheme();
