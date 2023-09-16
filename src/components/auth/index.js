@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 // project import
 import MainCard from 'components/cards/MainCard';
 
-const AuthCardWrapper = ({ children, ...other }) => (
+const Auth = ({ children, ...other }) => (
   <MainCard
     sx={{
       maxWidth: { xs: 400, lg: 475 },
@@ -23,8 +23,8 @@ const AuthCardWrapper = ({ children, ...other }) => (
   </MainCard>
 );
 
-AuthCardWrapper.propTypes = {
+Auth.propTypes = {
   children: PropTypes.node
 };
 
-export default AuthCardWrapper;
+export default Auth;

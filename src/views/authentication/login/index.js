@@ -1,20 +1,23 @@
 import { Link } from 'react-router-dom';
 
 // material-ui
+import { styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Stack, Typography, useMediaQuery, Link as LinkMui } from '@mui/material';
 
 // project imports
-import AuthWrapper from 'components/auth/AuthWrapper';
-import AuthCardWrapper from 'components/auth/AuthCardWrapper';
+import AuthCardWrapper from 'components/auth';
 import AuthLogin from './AuthLogin';
 import Logo from 'components/Logo';
-
-// ================================ LOGIN ================================ //
 
 const Login = () => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
+
+  const AuthWrapper = styled('div')(({ theme }) => ({
+    backgroundColor: theme.palette.primary.light,
+    minHeight: '100vh'
+  }));
 
   return (
     <AuthWrapper>
