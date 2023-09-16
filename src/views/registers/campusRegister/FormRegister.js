@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -11,27 +11,51 @@ import { Formik } from 'formik';
 
 // project imports
 import AnimateButton from 'components/extended/AnimateButton';
+import Toast from 'components/toast';
+import SkeletonEarningCard from 'components/cards/Skeleton/EarningCard';
 
 // models
-import { postRegister } from 'models/campus';
+import { getRegister, postRegister } from 'models/campus';
 
 const FormRegister = ({ ...others }) => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { id } = useParams();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [success, setSuccess] = useState(false);
+  const [campus, setCampus] = useState({});
+
+  const requestCampusRegister = async () => {
+    if (id) {
+      const campusData = await getRegister(id);
+      setCampus(campusData);
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    requestCampusRegister();
+  });
 
   let validationSchema = Yup.object().shape({
     name: Yup.string().max(255).required('O nome é obrigatório'),
     address: Yup.string().max(255).required('O endereço é obrigatório')
   });
 
+  if (isLoading) {
+    return <SkeletonEarningCard />;
+  }
+
   return (
     <>
       <Formik
         initialValues={{
-          name: '',
-          address: '',
+          id: campus.id || '',
+          name: campus.nome || '',
+          address: campus.endereco || '',
           submit: null
         }}
         validationSchema={validationSchema}
@@ -42,8 +66,8 @@ const FormRegister = ({ ...others }) => {
             setSubmitting(false);
             setSuccess(true);
             setTimeout(() => {
-              navigate('/');
-            }, 5000);
+              navigate('/campus');
+            }, 2000);
           } catch (err) {
             setStatus({ success: false });
             setErrors({ submit: err.message });
@@ -94,6 +118,12 @@ const FormRegister = ({ ...others }) => {
               {errors.submit && (
                 <Box sx={{ mt: 3 }}>
                   <FormHelperText error>{errors.submit}</FormHelperText>
+                  <Toast
+                    type="error"
+                    message={`Campus não foi ${campus.id ? 'atualizado' : 'cadastrado'}!`}
+                    open={true}
+                    handleClose={() => {}}
+                  />
                 </Box>
               )}
             </Stack>
@@ -101,10 +131,18 @@ const FormRegister = ({ ...others }) => {
             <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
               {success && (
                 <Box sx={{ mt: 3 }}>
-                  <FormHelperText style={{ color: 'green', textAlign: 'center' }}>Cadastro realizado com sucesso.</FormHelperText>
                   <FormHelperText style={{ color: 'green', textAlign: 'center' }}>
-                    Você será redirecionado para tela de ...?!
+                    Cadastro {campus.id ? 'atualizado' : 'realizado'} com sucesso.
                   </FormHelperText>
+                  <FormHelperText style={{ color: 'green', textAlign: 'center' }}>
+                    Você será redirecionado para tela de Listagem!
+                  </FormHelperText>
+                  <Toast
+                    type="success"
+                    message={`Campus ${campus.id ? 'atualizado' : 'cadastrado'} com sucesso!`}
+                    open={true}
+                    handleClose={() => {}}
+                  />
                 </Box>
               )}
             </Stack>
@@ -120,7 +158,7 @@ const FormRegister = ({ ...others }) => {
                   variant="contained"
                   color="secondary"
                 >
-                  Cadastrar
+                  {campus.id ? 'Atualizar' : 'Cadastrar'}
                 </Button>
               </AnimateButton>
             </Box>

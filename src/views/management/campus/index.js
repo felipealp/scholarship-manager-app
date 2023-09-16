@@ -6,13 +6,16 @@ import { gridSpacing } from 'store/constant';
 
 // project imports
 import List from 'components/list';
+import Toast from 'components/toast';
 import SkeletonEarningCard from 'components/cards/Skeleton/EarningCard';
 
 // models
-import { getCampus } from 'models/campus';
+import { getAll, deleteRegister } from 'models/campus';
 
 const Campus = () => {
   const [isLoading, setLoading] = useState(true);
+  const [toastSuccess, setToastSuccess] = useState(false);
+  const [toastError, setToastError] = useState(false);
   const [campus, setCampus] = useState([]);
 
   const columns = [
@@ -20,9 +23,9 @@ const Campus = () => {
     { field: 'endereco', headerName: 'Endereço', flex: 1 }
   ];
 
-  const requestGetCampus = async () => {
+  const requestCampusList = async () => {
     setLoading(true);
-    const data = await getCampus();
+    const data = await getAll();
 
     if (data) {
       setCampus(data);
@@ -30,9 +33,19 @@ const Campus = () => {
     }
   };
 
+  const handleDelete = async (item) => {
+    try {
+      await deleteRegister(item.id);
+      setToastSuccess(true);
+      requestCampusList();
+    } catch (err) {
+      setToastError(true);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
-    requestGetCampus();
+    requestCampusList();
   }, []);
 
   if (isLoading) {
@@ -42,7 +55,24 @@ const Campus = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <List title="Lista de Campus" urlRegister="/cadastro-de-campus" columns={columns} rows={campus} />
+        <Toast
+          type="success"
+          message={`Campus foi apagado!`}
+          open={toastSuccess}
+          handleClose={() => {
+            setToastSuccess(false);
+          }}
+        />
+        <Toast
+          type="error"
+          message={`Campus não foi apagado!`}
+          open={toastError}
+          handleClose={() => {
+            setToastError(false);
+          }}
+        />
+
+        <List title="Lista de Campus" urlRegister="/cadastro-de-campus" handleDelete={handleDelete} columns={columns} rows={campus} />
       </Grid>
     </Grid>
   );
