@@ -7,7 +7,7 @@ import Loadable from 'components/loadable';
 import MinimalLayout from 'layout/MinimalLayout';
 
 // login components
-const Login = Loadable(lazy(() => import('views/authentication/login')));
+const Login = Loadable(lazy(() => import('views/authentication')));
 
 const UnprotectedRoute = ({ element }) => {
   const isAuthenticated = localStorage.getItem('user_token');
