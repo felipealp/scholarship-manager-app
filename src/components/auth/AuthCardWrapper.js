@@ -6,8 +6,6 @@ import { Box } from '@mui/material';
 // project import
 import MainCard from 'components/cards/MainCard';
 
-// ==============================|| AUTHENTICATION CARD WRAPPER ||============================== //
-
 const AuthCardWrapper = ({ children, ...other }) => (
   <MainCard
     sx={{
