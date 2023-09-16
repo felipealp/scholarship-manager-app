@@ -1,10 +1,10 @@
 import { get, post, patch, remove } from 'services/request';
 
 const getAll = async () => {
-  const campus = await get('/campus');
+  const registers = await get('/campus');
 
-  if (campus.data && !campus.error) {
-    return campus.data;
+  if (registers.data && !registers.error) {
+    return registers.data;
   }
 
   return [];

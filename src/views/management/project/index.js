@@ -9,7 +9,7 @@ import List from 'components/list';
 import SkeletonEarningCard from 'components/Skeleton';
 
 // models
-import { getProjects } from 'models/project';
+import { getAll } from 'models/project';
 
 const Project = () => {
   const [isLoading, setLoading] = useState(true);
@@ -25,7 +25,7 @@ const Project = () => {
 
   const requestGetProjects = async () => {
     setLoading(true);
-    const data = await getProjects();
+    const data = await getAll();
 
     if (data) {
       setProjects(data);
