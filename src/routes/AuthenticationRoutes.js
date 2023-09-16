@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 // project imports
 import Loadable from 'components/loadable';
-import MinimalLayout from 'layout/MinimalLayout';
+import MinimalLayout from 'layout/minimalLayout';
 
 // login components
 const Login = Loadable(lazy(() => import('views/authentication')));

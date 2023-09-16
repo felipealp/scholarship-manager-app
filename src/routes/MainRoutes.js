@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 // project imports
-import MainLayout from 'layout/MainLayout';
+import MainLayout from 'layout/mainLayout';
 import Loadable from 'components/loadable';
 
 const Campus = Loadable(lazy(() => import('views/management/campus')));
