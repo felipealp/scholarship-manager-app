@@ -15,13 +15,17 @@ const Dialog = ({ title, text, open, handleClose, handleConfirm }) => {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
+  if (!open) {
+    return <></>;
+  }
+
   return (
     <div>
       <DialogCompopnent
         open={open}
         TransitionComponent={Transition}
         keepMounted
-        onClose={() => handleClose}
+        onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle>{title}</DialogTitle>
