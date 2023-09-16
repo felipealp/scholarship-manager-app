@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 import * as React from 'react';
+
+// material-ui
 import Button from '@mui/material/Button';
 import { Dialog as DialogCompopnent } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';
@@ -8,11 +10,11 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
-
 const Dialog = ({ title, text, open, handleClose, handleConfirm }) => {
+  const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
   return (
     <div>
       <DialogCompopnent
