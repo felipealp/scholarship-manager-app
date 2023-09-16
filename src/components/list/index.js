@@ -12,9 +12,12 @@ import Delete from '@mui/icons-material/Delete';
 
 // project imports
 import MainCard from 'components/cards/MainCard';
+import Dialog from 'components/dialog';
 
-const List = ({ title, urlRegister, columns, rows }) => {
+const List = ({ title, urlRegister, handleDelete, columns, rows }) => {
   const [searchText, setSearchText] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [itemSelected, setItemSelected] = useState({});
 
   const filteredRows = rows.filter((row) =>
     Object.values(row).some((value) => String(value).toLowerCase().includes(searchText.toLowerCase()))
@@ -28,8 +31,9 @@ const List = ({ title, urlRegister, columns, rows }) => {
     window.location.href = `${urlRegister}/${item.id}`;
   };
 
-  const handleDeleteClick = (item) => {
-    console.log(item)
+  const handleDeleteClick = () => {
+    handleDelete(itemSelected);
+    setOpenDialog(false);
   };
 
   const customLocaleText = {
@@ -72,7 +76,13 @@ const List = ({ title, urlRegister, columns, rows }) => {
           <IconButton aria-label="Editar" onClick={() => handleEditClick(params.row)}>
             <Edit />
           </IconButton>
-          <IconButton aria-label="Excluir" onClick={() => handleDeleteClick(params.row)}>
+          <IconButton
+            aria-label="Excluir"
+            onClick={() => {
+              setItemSelected(params.row);
+              setOpenDialog(true);
+            }}
+          >
             <Delete />
           </IconButton>
         </div>
@@ -82,6 +92,15 @@ const List = ({ title, urlRegister, columns, rows }) => {
 
   return (
     <MainCard title={title}>
+      <Dialog
+        open={openDialog}
+        title="Tem certeza?"
+        text="Essa operação não tem volta, deseja realmente continuar?"
+        handleClose={() => {
+          setOpenDialog(false);
+        }}
+        handleConfirm={handleDeleteClick}
+      />
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: '36px' }}>
         <TextField
           id="search"
@@ -136,6 +155,7 @@ const List = ({ title, urlRegister, columns, rows }) => {
 List.propTypes = {
   title: PropTypes.string,
   urlRegister: PropTypes.string,
+  handleDelete: PropTypes.func,
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       field: PropTypes.string,
