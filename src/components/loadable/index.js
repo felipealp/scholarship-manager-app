@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 
 // styles
 
-const Loadable = (Component) => (props) =>{
+const Loadable = (Component) => (props) => {
   const LoaderWrapper = styled('div')({
     position: 'fixed',
     top: 0,
