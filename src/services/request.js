@@ -31,6 +31,36 @@ const post = (url, data) => {
   }
 };
 
+const patch = (url, data) => {
+  try {
+    const response = axios.patch(url, data, {
+      baseURL: configApi.apiUrl,
+      headers: {
+        Authorization: `Token ${configApi.token}`
+      }
+    });
+
+    return response;
+  } catch (err) {
+    return { error: err };
+  }
+};
+
+const remove = (url) => {
+  try {
+    const response = axios.delete(url, {
+      baseURL: configApi.apiUrl,
+      headers: {
+        Authorization: `Token ${configApi.token}`
+      }
+    });
+
+    return response;
+  } catch (err) {
+    return { error: err };
+  }
+};
+
 const auth = async (data) => {
   try {
     const response = await axios.post('/api/auth-token/', data, {
@@ -47,4 +77,4 @@ const auth = async (data) => {
   }
 };
 
-export { get, post, auth };
+export { get, post, patch, remove, auth };
