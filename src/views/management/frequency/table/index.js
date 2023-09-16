@@ -7,7 +7,7 @@ import './style.scss';
 
 // project imports
 import MainCard from 'components/cards';
-import SkeletonEarningCard from 'components/cards/Skeleton/EarningCard';
+import SkeletonEarningCard from 'components/Skeleton';
 
 const Table = () => {
   const { mes } = useParams();

@@ -6,7 +6,7 @@ import { gridSpacing } from 'store/constant';
 
 // project imports
 import List from 'components/list';
-import SkeletonEarningCard from 'components/cards/Skeleton/EarningCard';
+import SkeletonEarningCard from 'components/Skeleton';
 
 // models
 import { getDeans } from 'models/dean';

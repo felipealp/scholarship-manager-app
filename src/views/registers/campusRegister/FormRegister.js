@@ -12,7 +12,7 @@ import { Formik } from 'formik';
 // project imports
 import AnimateButton from 'components/extended/AnimateButton';
 import Toast from 'components/toast';
-import SkeletonEarningCard from 'components/cards/Skeleton/EarningCard';
+import SkeletonEarningCard from 'components/Skeleton';
 
 // models
 import { getRegister, postRegister } from 'models/campus';
