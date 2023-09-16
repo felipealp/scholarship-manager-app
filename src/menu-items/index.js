@@ -1,6 +1,3 @@
-import management from './management';
-import other from './reports';
-
 // student
 import studentManagement from './student/management';
 import studentReports from './student/reports';
@@ -33,13 +30,13 @@ if (userType === 'Bolsista') {
   menuItems = {
     items: [coordinatorManagement, coordinatorRegisters]
   };
-} else if (userType === 'ProReitor') {
+} else if (userType === 'ProReitor' || userType === 'Usuário Padrão') {
   menuItems = {
     items: [deanManagement, deanRegisters]
   };
 } else {
   menuItems = {
-    items: [management, other]
+    items: []
   };
 }
 
