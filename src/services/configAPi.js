@@ -1,6 +1,6 @@
 const configApi = {
-  url: 'http://127.0.0.1:8000',
-  apiUrl: 'http://127.0.0.1:8000/api',
+  url: process.env.REACT_APP_API_URL,
+  apiUrl: `${process.env.REACT_APP_API_URL}/api`,
   token: localStorage.getItem('user_token')
 };
 
