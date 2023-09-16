@@ -5,7 +5,7 @@ import { useTheme, styled } from '@mui/material/styles';
 import { Avatar, Box, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material';
 
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'components/cards';
 import TotalIncomeCard from 'components/cards/Skeleton/TotalIncomeCard';
 
 // assets

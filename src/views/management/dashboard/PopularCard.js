@@ -7,7 +7,7 @@ import { Avatar, Button, CardActions, CardContent, Divider, Grid, Menu, MenuItem
 
 // project imports
 import BajajAreaChartCard from './BajajAreaChartCard';
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'components/cards';
 import SkeletonPopularCard from 'components/cards/Skeleton/PopularCard';
 import { gridSpacing } from 'store/constant';
 

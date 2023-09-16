@@ -9,7 +9,7 @@ import { Avatar, Box, Button, Grid, Typography } from '@mui/material';
 import Chart from 'react-apexcharts';
 
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'components/cards';
 import SkeletonTotalOrderCard from 'components/cards/Skeleton/EarningCard';
 
 import ChartDataMonth from './chart-data/total-order-month-line-chart';

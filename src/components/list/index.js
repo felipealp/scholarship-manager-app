@@ -11,7 +11,7 @@ import Edit from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
 
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'components/cards';
 import Dialog from 'components/dialog';
 
 const List = ({ title, urlRegister, handleDelete, columns, rows }) => {

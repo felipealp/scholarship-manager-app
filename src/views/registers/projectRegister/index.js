@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 import { gridSpacing } from 'store/constant';
 
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'components/cards';
 import FormRegister from './FormRegister';
 
 const ProjectRegister = () => {

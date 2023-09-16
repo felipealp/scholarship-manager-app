@@ -26,7 +26,7 @@ import {
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // project imports
-import MainCard from 'components/cards/MainCard';
+import MainCard from 'components/cards';
 import Transitions from 'components/extended/Transitions';
 
 // models
