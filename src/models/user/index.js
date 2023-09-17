@@ -44,7 +44,7 @@ const postRegister = async (data) => {
   if (data.userType === 'Bolsista') {
     userEndpoint = '/bolsistas/';
     userData = {
-      matricula: data.email,
+      matricula: data.matriculation,
       nome: data.name,
       username: data.username,
       password: data.password,
@@ -55,7 +55,7 @@ const postRegister = async (data) => {
   } else if (data.userType === 'Orientador') {
     userEndpoint = '/orientadores/';
     userData = {
-      matricula: data.email,
+      matricula: data.matriculation,
       nome: data.name,
       username: data.username,
       password: data.password,
@@ -66,7 +66,7 @@ const postRegister = async (data) => {
   } else if (data.userType === 'Coordenador') {
     userEndpoint = '/coordenadores/';
     userData = {
-      matricula: data.email,
+      matricula: data.matriculation,
       nome: data.name,
       username: data.username,
       password: data.password,
@@ -76,7 +76,7 @@ const postRegister = async (data) => {
   } else if (data.userType === 'Pró-Reitor') {
     userEndpoint = '/proreitoria/';
     userData = {
-      matricula: data.email,
+      matricula: data.matriculation,
       name: data.name,
       username: data.username,
       password: data.password,
@@ -103,7 +103,7 @@ const patchRegister = async (id, data) => {
   if (data.userType === 'Bolsista') {
     userEndpoint = `/bolsistas/${id}/`;
     userData = {
-      matricula: data.email,
+      matricula: data.matriculation,
       nome: data.name,
       username: data.username,
       password: data.password,
@@ -114,7 +114,7 @@ const patchRegister = async (id, data) => {
   } else if (data.userType === 'Orientador') {
     userEndpoint = `/orientadores/${id}/`;
     userData = {
-      matricula: data.email,
+      matricula: data.matriculation,
       nome: data.name,
       username: data.username,
       password: data.password,
@@ -125,7 +125,7 @@ const patchRegister = async (id, data) => {
   } else if (data.userType === 'Coordenador') {
     userEndpoint = `/coordenadores/${id}/`;
     userData = {
-      matricula: data.email,
+      matricula: data.matriculation,
       nome: data.name,
       username: data.username,
       password: data.password,
@@ -135,7 +135,7 @@ const patchRegister = async (id, data) => {
   } else if (data.userType === 'Pró-Reitor') {
     userEndpoint = `/proreitoria/${id}/`;
     userData = {
-      matricula: data.email,
+      matricula: data.matriculation,
       name: data.name,
       username: data.username,
       password: data.password,

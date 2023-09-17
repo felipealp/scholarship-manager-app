@@ -35,6 +35,7 @@ import { Formik } from 'formik';
 // project imports
 import AnimateButton from 'layout/extended/AnimateButton';
 import { strengthColor, strengthIndicator } from 'utils/passwordStrength';
+import Toast from 'components/toast';
 import SkeletonEarningCard from 'components/Skeleton';
 
 // models
@@ -82,6 +83,20 @@ const FormRegister = ({ userType, ...others }) => {
     const temp = strengthIndicator(value);
     setStrength(temp);
     setLevel(strengthColor(temp));
+  };
+
+  const getEndpoint = () => {
+    if (type === 'bolsista') {
+      return 'bolsistas';
+    } else if (type === 'orientador') {
+      return 'orientadores';
+    } else if (type === 'coordenador') {
+      return 'coordenadores';
+    } else if (type === 'proreitor') {
+      return 'proreitoria';
+    } else {
+      return '';
+    }
   };
 
   const customCampusValidation = (value) => {
@@ -161,8 +176,8 @@ const FormRegister = ({ userType, ...others }) => {
             setSubmitting(false);
             setSuccess(true);
             setTimeout(() => {
-              navigate('/');
-            }, 5000);
+              navigate(`/${getEndpoint()}`);
+            }, 2000);
           } catch (err) {
             setStatus({ success: false });
             setErrors({ submit: err.message });
@@ -495,6 +510,12 @@ const FormRegister = ({ userType, ...others }) => {
               {errors.submit && (
                 <Box sx={{ mt: 3 }}>
                   <FormHelperText error>{errors.submit}</FormHelperText>
+                  <Toast
+                    type="error"
+                    message={`${userType}  não foi ${user.id ? 'atualizado' : 'cadastrado'}!`}
+                    open={true}
+                    handleClose={() => {}}
+                  />
                 </Box>
               )}
             </Stack>
@@ -502,10 +523,18 @@ const FormRegister = ({ userType, ...others }) => {
             <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
               {success && (
                 <Box sx={{ mt: 3 }}>
-                  <FormHelperText style={{ color: 'green', textAlign: 'center' }}>Cadastro realizado com sucesso.</FormHelperText>
+                  <FormHelperText style={{ color: 'green', textAlign: 'center' }}>
+                    Cadastro {user.id ? 'atualizado' : 'realizado'} com sucesso.
+                  </FormHelperText>
                   <FormHelperText style={{ color: 'green', textAlign: 'center' }}>
                     Você será redirecionado para tela de listagem!
                   </FormHelperText>
+                  <Toast
+                    type="success"
+                    message={`${userType} ${user.id ? 'atualizado' : 'cadastrado'} com sucesso!`}
+                    open={true}
+                    handleClose={() => {}}
+                  />
                 </Box>
               )}
             </Stack>
