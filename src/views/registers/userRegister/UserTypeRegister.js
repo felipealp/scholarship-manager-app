@@ -31,7 +31,7 @@ const UserTypeRegister = () => {
     } else if (userTypeLogged === 'Coordenador') {
       return ['Bolsista', 'Orientador', 'Coordenador'];
     } else if (userTypeLogged === 'ProReitor' || userTypeLogged === 'Usuário Padrão') {
-      return ['Bolsista', 'Orientador', 'Coordenador', 'Pró-Reitor'];
+      return ['Bolsista', 'Orientador', 'Coordenador', 'Reitor'];
     } else {
       return [];
     }

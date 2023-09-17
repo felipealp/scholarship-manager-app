@@ -8,7 +8,7 @@ const getEndpoint = (userType) => {
     return 'orientadores';
   } else if (userType === 'coordenador') {
     return 'coordenadores';
-  } else if (userType === 'proreitor') {
+  } else if (userType === 'reitor' || userType === 'proreitor') {
     return 'proreitoria';
   } else {
     return '';
@@ -73,7 +73,7 @@ const postRegister = async (data) => {
       email: data.email,
       campus_id: data.campus
     };
-  } else if (data.userType === 'Pró-Reitor') {
+  } else if (data.userType === 'Reitor') {
     userEndpoint = '/proreitoria/';
     userData = {
       matricula: data.matriculation,
@@ -132,7 +132,7 @@ const patchRegister = async (id, data) => {
       email: data.email,
       campus_id: data.campus
     };
-  } else if (data.userType === 'Pró-Reitor') {
+  } else if (data.userType === 'Reitor') {
     userEndpoint = `/proreitoria/${id}/`;
     userData = {
       matricula: data.matriculation,

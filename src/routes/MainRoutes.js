@@ -72,7 +72,7 @@ const MainRoutes = {
       element: <Coordinator />
     },
     {
-      path: 'pro-reitores',
+      path: 'reitores',
       element: <Dean />
     },
     {

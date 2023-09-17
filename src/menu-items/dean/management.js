@@ -51,10 +51,10 @@ const management = {
       breadcrumbs: false
     },
     {
-      id: 'pro-reitores',
-      title: 'Pró-Reitores',
+      id: 'reitores',
+      title: 'Reitores',
       type: 'item',
-      url: '/pro-reitores',
+      url: '/reitores',
       icon: icons.IconBrandApplePodcast,
       breadcrumbs: false
     }

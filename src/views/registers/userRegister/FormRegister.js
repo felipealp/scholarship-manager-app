@@ -92,8 +92,8 @@ const FormRegister = ({ userType, ...others }) => {
       return 'orientadores';
     } else if (type === 'coordenador') {
       return 'coordenadores';
-    } else if (type === 'proreitor') {
-      return 'proreitoria';
+    } else if (type === 'reitor') {
+      return 'reitores';
     } else {
       return '';
     }
@@ -315,9 +315,9 @@ const FormRegister = ({ userType, ...others }) => {
               </>
             )}
 
-            {userType === 'Pró-Reitor' && (
+            {userType === 'Reitor' && (
               <>
-                <FormControl fullWidth error={Boolean(touched.campus && errors.campus)} style={{ margin: '8px 0' }}>
+                {/* <FormControl fullWidth error={Boolean(touched.campus && errors.campus)} style={{ margin: '8px 0' }}>
                   <InputLabel id="demo-simple-select-label">Campus</InputLabel>
                   <Select
                     labelId="demo-simple-select-label"
@@ -338,7 +338,7 @@ const FormRegister = ({ userType, ...others }) => {
                       {errors.campus}
                     </FormHelperText>
                   )}
-                </FormControl>
+                </FormControl> */}
 
                 <FormControl fullWidth error={Boolean(touched.dateEnd && errors.dateEnd)}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -527,7 +527,7 @@ const FormRegister = ({ userType, ...others }) => {
                     Cadastro {user.id ? 'atualizado' : 'realizado'} com sucesso.
                   </FormHelperText>
                   <FormHelperText style={{ color: 'green', textAlign: 'center' }}>
-                    Você será redirecionado para tela de listagem!
+                    Você será redirecionado para tela {type ? 'de listagem' : 'inicial'}!
                   </FormHelperText>
                   <Toast
                     type="success"
