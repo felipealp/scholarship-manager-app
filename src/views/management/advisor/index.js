@@ -58,7 +58,7 @@ const Advisor = () => {
       <Grid item xs={12}>
         <Toast
           type="success"
-          message={`Bolsista apagado com sucesso!`}
+          message={`Orientador apagado com sucesso!`}
           open={toastSuccess}
           handleClose={() => {
             setToastSuccess(false);
@@ -66,7 +66,7 @@ const Advisor = () => {
         />
         <Toast
           type="error"
-          message={`Bolsista não pôde ser apagado!`}
+          message={`Orientador não pôde ser apagado!`}
           open={toastError}
           handleClose={() => {
             setToastError(false);

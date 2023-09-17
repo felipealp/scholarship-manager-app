@@ -6,13 +6,16 @@ import { gridSpacing } from 'store/constant';
 
 // project imports
 import List from 'components/list';
+import Toast from 'components/toast';
 import SkeletonEarningCard from 'components/Skeleton';
 
 // models
-import { getCoordinators } from 'models/coordinator';
+import { getAll, deleteRegister } from 'models/user';
 
 const Coordinator = () => {
   const [isLoading, setLoading] = useState(true);
+  const [toastSuccess, setToastSuccess] = useState(false);
+  const [toastError, setToastError] = useState(false);
   const [coordinators, setCoordinators] = useState([]);
 
   const columns = [
@@ -21,9 +24,9 @@ const Coordinator = () => {
     { field: 'email', headerName: 'Email', renderCell: (params) => params.row.user.email, flex: 1 }
   ];
 
-  const requestGetCoordinators = async () => {
+  const requestCoordinatorsList = async () => {
     setLoading(true);
-    const data = await getCoordinators();
+    const data = await getAll('coordenador');
 
     if (data) {
       setCoordinators(data);
@@ -31,9 +34,19 @@ const Coordinator = () => {
     }
   };
 
+  const handleDelete = async (item) => {
+    try {
+      await deleteRegister('coordenador', item.id);
+      setToastSuccess(true);
+      requestCoordinatorsList();
+    } catch (err) {
+      setToastError(true);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
-    requestGetCoordinators();
+    requestCoordinatorsList();
   }, []);
 
   if (isLoading) {
@@ -43,7 +56,30 @@ const Coordinator = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <List title="Lista de Coordenadores" urlRegister="/cadastro-de-usuario" columns={columns} rows={coordinators} />
+        <Toast
+          type="success"
+          message={`Coordenador apagado com sucesso!`}
+          open={toastSuccess}
+          handleClose={() => {
+            setToastSuccess(false);
+          }}
+        />
+        <Toast
+          type="error"
+          message={`Coordenador não pôde ser apagado!`}
+          open={toastError}
+          handleClose={() => {
+            setToastError(false);
+          }}
+        />
+
+        <List
+          title="Lista de Coordenadores"
+          urlRegister="/cadastro-de-usuario/coordenador"
+          handleDelete={handleDelete}
+          columns={columns}
+          rows={coordinators}
+        />
       </Grid>
     </Grid>
   );
