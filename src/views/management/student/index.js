@@ -6,13 +6,16 @@ import { gridSpacing } from 'store/constant';
 
 // project imports
 import List from 'components/list';
+import Toast from 'components/toast';
 import SkeletonEarningCard from 'components/Skeleton';
 
 // models
-import { getStudents } from 'models/student';
+import { getAll, deleteRegister } from 'models/user';
 
 const Student = () => {
   const [isLoading, setLoading] = useState(true);
+  const [toastSuccess, setToastSuccess] = useState(false);
+  const [toastError, setToastError] = useState(false);
   const [students, setStudents] = useState([]);
 
   const columns = [
@@ -21,9 +24,9 @@ const Student = () => {
     { field: 'email', headerName: 'Email', renderCell: (params) => params.row.user.email, flex: 1 }
   ];
 
-  const requestGetStudents = async () => {
+  const requestStudentsList = async () => {
     setLoading(true);
-    const data = await getStudents();
+    const data = await getAll('bolsista');
 
     if (data) {
       setStudents(data);
@@ -31,9 +34,19 @@ const Student = () => {
     }
   };
 
+  const handleDelete = async (item) => {
+    try {
+      await deleteRegister('bolsista', item.id);
+      setToastSuccess(true);
+      requestStudentsList();
+    } catch (err) {
+      setToastError(true);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
-    requestGetStudents();
+    requestStudentsList();
   }, []);
 
   if (isLoading) {
@@ -43,7 +56,30 @@ const Student = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-        <List title="Lista de Bolsistas" urlRegister="/cadastro-de-usuario" columns={columns} rows={students} />
+        <Toast
+          type="success"
+          message={`Bolsista apagado com sucesso!`}
+          open={toastSuccess}
+          handleClose={() => {
+            setToastSuccess(false);
+          }}
+        />
+        <Toast
+          type="error"
+          message={`Bolsista não pôde ser apagado!`}
+          open={toastError}
+          handleClose={() => {
+            setToastError(false);
+          }}
+        />
+
+        <List
+          title="Lista de Bolsistas"
+          urlRegister="/cadastro-de-usuario/bolsista"
+          handleDelete={handleDelete}
+          columns={columns}
+          rows={students}
+        />
       </Grid>
     </Grid>
   );

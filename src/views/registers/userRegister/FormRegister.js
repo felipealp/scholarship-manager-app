@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -35,9 +35,12 @@ import { Formik } from 'formik';
 // project imports
 import AnimateButton from 'layout/extended/AnimateButton';
 import { strengthColor, strengthIndicator } from 'utils/passwordStrength';
+import SkeletonEarningCard from 'components/Skeleton';
 
 // models
-import { getCampus, getProjects, postRegister } from 'models/user/register';
+import { getAll as getCampus } from 'models/campus';
+import { getAll as getProjects } from 'models/project';
+import { getRegister, postRegister } from 'models/user';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
@@ -45,7 +48,12 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const FormRegister = ({ userType, ...others }) => {
   const theme = useTheme();
+  const { type, id } = useParams();
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [success, setSuccess] = useState(false);
+  const [user, setUser] = useState({});
 
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const [showPassword, setShowPassword] = useState(false);
@@ -61,8 +69,6 @@ const FormRegister = ({ userType, ...others }) => {
 
   const [campus, setCampus] = useState([]);
   const [projects, setProjects] = useState([]);
-
-  const [success, setSuccess] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -86,19 +92,9 @@ const FormRegister = ({ userType, ...others }) => {
     return !((userType === 'Bolsista' || userType === 'Orientador') && !value);
   };
 
-  useEffect(() => {
-    changePassword('123456');
-  }, []);
-
-  let validationSchema = Yup.object().shape({
-    campus: Yup.string().test('custom-validation', 'O campus é obrigatório', customCampusValidation),
-    project: Yup.string().test('custom-validation', 'O projeto é obrigatório', customProjectValidation),
-    matriculation: Yup.string().max(255).required('A matrícula é obrigatória'),
-    username: Yup.string().max(255).required('O usuário é obrigatório'),
-    name: Yup.string().max(255).required('O nome é obrigatório'),
-    email: Yup.string().email('O email deve ser válido').max(255).required('O email é obrigatório'),
-    password: Yup.string().max(255).required('A senha é obrigatória')
-  });
+  const customPasswordValidation = (value) => {
+    return !(!user.id && !value);
+  };
 
   const fetchCampus = async () => {
     const campusColection = await getCampus();
@@ -110,23 +106,50 @@ const FormRegister = ({ userType, ...others }) => {
     setProjects(projectColection);
   };
 
+  const requestUserRegister = async () => {
+    if (type && id) {
+      const userData = await getRegister(type, id);
+      setUser(userData);
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
     changePassword('123456');
     fetchCampus();
     fetchProjects();
-  }, [userType]);
+    requestUserRegister();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  let validationSchema = Yup.object().shape({
+    campus: Yup.string().test('custom-validation', 'O campus é obrigatório', customCampusValidation),
+    project: Yup.string().test('custom-validation', 'O projeto é obrigatório', customProjectValidation),
+    matriculation: Yup.string().max(255).required('A matrícula é obrigatória'),
+    username: Yup.string().max(255).required('O usuário é obrigatório'),
+    name: Yup.string().max(255).required('O nome é obrigatório'),
+    email: Yup.string().email('O email deve ser válido').max(255).required('O email é obrigatório'),
+    password: Yup.string().test('custom-validation', 'A senha é obrigatória', customPasswordValidation)
+  });
+
+  if (isLoading) {
+    return <SkeletonEarningCard />;
+  }
 
   return (
     <>
       <Formik
         initialValues={{
-          campus: '',
-          project: '',
+          id: user.id || '',
+          campus: user.campus || '',
+          project: user.projeto || '',
           cargo: '',
-          matriculation: '',
-          username: '',
-          name: '',
-          email: '',
+          matriculation: user.user?.matricula || '',
+          username: user.user?.username || '',
+          name: user.user?.name || '',
+          email: user.user?.email || '',
           password: '',
           submit: null
         }}
@@ -412,56 +435,60 @@ const FormRegister = ({ userType, ...others }) => {
               )}
             </FormControl>
 
-            <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
-              <InputLabel htmlFor="outlined-adornment-password-register">Senha</InputLabel>
-              <OutlinedInput
-                id="outlined-adornment-password-register"
-                type={showPassword ? 'text' : 'password'}
-                value={values.password}
-                name="password"
-                label="Senha"
-                onBlur={handleBlur}
-                onChange={(e) => {
-                  handleChange(e);
-                  changePassword(e.target.value);
-                }}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                      size="large"
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                inputProps={{}}
-              />
-              {touched.password && errors.password && (
-                <FormHelperText error id="standard-weight-helper-text-password-register">
-                  {errors.password}
-                </FormHelperText>
-              )}
-            </FormControl>
+            {!user.id && (
+              <>
+                <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
+                  <InputLabel htmlFor="outlined-adornment-password-register">Senha</InputLabel>
+                  <OutlinedInput
+                    id="outlined-adornment-password-register"
+                    type={showPassword ? 'text' : 'password'}
+                    value={values.password}
+                    name="password"
+                    label="Senha"
+                    onBlur={handleBlur}
+                    onChange={(e) => {
+                      handleChange(e);
+                      changePassword(e.target.value);
+                    }}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          size="large"
+                        >
+                          {showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    inputProps={{}}
+                  />
+                  {touched.password && errors.password && (
+                    <FormHelperText error id="standard-weight-helper-text-password-register">
+                      {errors.password}
+                    </FormHelperText>
+                  )}
+                </FormControl>
 
-            {strength !== 0 && (
-              <FormControl fullWidth>
-                <Box sx={{ mb: 2 }}>
-                  <Grid container spacing={2} alignItems="center">
-                    <Grid item>
-                      <Box style={{ backgroundColor: level?.color }} sx={{ width: 85, height: 8, borderRadius: '7px' }} />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle1" fontSize="0.75rem">
-                        {level?.label}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Box>
-              </FormControl>
+                {strength !== 0 && (
+                  <FormControl fullWidth>
+                    <Box sx={{ mb: 2 }}>
+                      <Grid container spacing={2} alignItems="center">
+                        <Grid item>
+                          <Box style={{ backgroundColor: level?.color }} sx={{ width: 85, height: 8, borderRadius: '7px' }} />
+                        </Grid>
+                        <Grid item>
+                          <Typography variant="subtitle1" fontSize="0.75rem">
+                            {level?.label}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Box>
+                  </FormControl>
+                )}
+              </>
             )}
 
             <Stack direction="row" alignItems="center" justifyContent="center" spacing={1}>
@@ -477,7 +504,7 @@ const FormRegister = ({ userType, ...others }) => {
                 <Box sx={{ mt: 3 }}>
                   <FormHelperText style={{ color: 'green', textAlign: 'center' }}>Cadastro realizado com sucesso.</FormHelperText>
                   <FormHelperText style={{ color: 'green', textAlign: 'center' }}>
-                    Você será redirecionado para tela de login!
+                    Você será redirecionado para tela de listagem!
                   </FormHelperText>
                 </Box>
               )}
@@ -494,7 +521,7 @@ const FormRegister = ({ userType, ...others }) => {
                   variant="contained"
                   color="secondary"
                 >
-                  Cadastrar
+                  {user.id ? 'Atualizar' : 'Cadastrar'}
                 </Button>
               </AnimateButton>
             </Box>

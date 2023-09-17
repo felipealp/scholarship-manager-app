@@ -109,8 +109,17 @@ const MainRoutes = {
           element: <UserRegister />
         },
         {
-          path: ':tipo',
-          element: <UserRegister />
+          path: ':type',
+          children: [
+            {
+              path: '',
+              element: <UserRegister />
+            },
+            {
+              path: ':id',
+              element: <UserRegister />
+            }
+          ]
         }
       ]
     },

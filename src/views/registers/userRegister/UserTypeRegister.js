@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 // material-ui
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
@@ -7,11 +8,41 @@ import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import FormRegister from './FormRegister';
 
 const UserTypeRegister = () => {
+  const { type } = useParams();
+
+  const userTypeLogged = localStorage.getItem('user_type');
   const [userType, setUserType] = useState('');
 
   const handleChange = (event) => {
     setUserType(event.target.value);
   };
+
+  const requestUserRegister = async () => {
+    if (type) {
+      setUserType(type.charAt(0).toUpperCase() + type.slice(1));
+    }
+  };
+
+  const getOptions = () => {
+    if (userTypeLogged === 'Bolsista') {
+      return [];
+    } else if (userTypeLogged === 'Orientador') {
+      return ['Bolsista', 'Orientador'];
+    } else if (userTypeLogged === 'Coordenador') {
+      return ['Bolsista', 'Orientador', 'Coordenador'];
+    } else if (userTypeLogged === 'ProReitor' || userTypeLogged === 'Usuário Padrão') {
+      return ['Bolsista', 'Orientador', 'Coordenador', 'Pró-Reitor'];
+    } else {
+      return [];
+    }
+  };
+
+  const userTypeOptions = getOptions();
+
+  useEffect(() => {
+    requestUserRegister();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const userTypeContent = () => {
     if (userType) {
@@ -37,10 +68,11 @@ const UserTypeRegister = () => {
             label="Tipo de Usuário"
             onChange={handleChange}
           >
-            <MenuItem value="Bolsista">Bolsista</MenuItem>
-            <MenuItem value="Orientador">Orientador</MenuItem>
-            <MenuItem value="Coordenador">Coordenador</MenuItem>
-            <MenuItem value="Pró-Reitor">Pró-Reitor</MenuItem>
+            {userTypeOptions.map((option, index) => (
+              <MenuItem key={index} value={option}>
+                {option}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </div>
