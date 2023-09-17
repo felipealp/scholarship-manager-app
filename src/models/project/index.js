@@ -11,8 +11,8 @@ const getAll = async () => {
   return [];
 };
 
-const getRegister = async (id, data) => {
-  const register = await get(`/projetos/${id}`, data);
+const getRegister = async (id) => {
+  const register = await get(`/projetos/${id}`);
 
   if (register.data) {
     return register.data;
