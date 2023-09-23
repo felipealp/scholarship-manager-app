@@ -1,9 +1,25 @@
-import React, { useRef } from 'react';
-import Report from './report';
+import PropTypes from 'prop-types';
+import { useRef } from 'react';
+
+// react-pdf
 import { PDFExport } from '@progress/kendo-react-pdf';
 
-const MyCustomComponent = () => {
+// material-ui
+import { Button } from '@mui/material';
+import { IconClipboardList } from '@tabler/icons';
+
+// project imports
+import Template from './style/template';
+
+const Report = ({ data }) => {
   const pdfExportComponent = useRef(null);
+  const pdfOptions = {
+    margin: '1cm',
+    fileName: 'frequência.pdf',
+    creator: 'UFERSA',
+    producer: 'UFERSA',
+    encoding: 'utf-8'
+  };
 
   const exportPDF = () => {
     if (pdfExportComponent.current) {
@@ -11,25 +27,21 @@ const MyCustomComponent = () => {
     }
   };
 
-  // Configure as opções de codificação para UTF-8
-  const pdfOptions = {
-    // paperSize: 'A4',
-    margin: '1cm',
-    fileName: 'seu_arquivo.pdf',
-    creator: 'Seu Nome',
-    producer: 'Sua Aplicação',
-    encoding: 'utf-8', // Configura a codificação UTF-8
-  };
-
   return (
     <div>
-      <button onClick={exportPDF}>Gerar PDF</button>
-      <div
-        // style={{ position: 'relative', width: 0, height: 0, overflow: 'hidden' }}
+      <Button
+        variant="contained"
+        style={{ margin: '1rem 1.5rem', backgroundColor: '#1e88e5', color: 'white', height: '50px' }}
+        onClick={exportPDF}
+        startIcon={<IconClipboardList />}
       >
+        Gerar PDF
+      </Button>
+
+      <div style={{ position: 'relative', width: 0, height: 0, overflow: 'hidden' }}>
         <PDFExport ref={pdfExportComponent} {...pdfOptions}>
           <div style={{ fontFamily: 'Roboto, Arial, sans-serif' }}>
-            <Report />
+            <Template data={data} />
           </div>
         </PDFExport>
       </div>
@@ -37,4 +49,8 @@ const MyCustomComponent = () => {
   );
 };
 
-export default MyCustomComponent;
+Report.propTypes = {
+  data: PropTypes.object
+};
+
+export default Report;
