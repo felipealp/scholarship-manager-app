@@ -1,28 +1,9 @@
-import React from 'react';
-// material-ui
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-
-import { getFrequency } from 'models/frequency';
+import PropTypes from 'prop-types';
 
 import './style.scss';
 import brasao from 'assets/images/brasao.png';
-// project imports
 
-// Seu componente React personalizado
-const MyCustomComponent = () => {
-  const { mes } = useParams();
-  const [month, setMonth] = useState('');
-  const [frequency, setFrequency] = useState([]);
-
-  useEffect(() => {
-    const date = new Date();
-    const currentMonth = date.getMonth() + 1;
-    setMonth(mes || currentMonth);
-    const frequencyRequest = getFrequency(month);
-    setFrequency(frequencyRequest);
-  }, [mes, month]);
-
+const Template = ({ data }) => {
   return (
     <div
       style={{
@@ -42,25 +23,32 @@ const MyCustomComponent = () => {
 
         <div className="header-infos">
           <div>
-            Mês: <span style={{margin: '0 3rem'}}></span> Ano:
+            Mês: Janeiro<span style={{ margin: '0 3rem' }}></span> Ano: 2023
           </div>
 
           <div className="header-infos-field">
-            <span style={{margin: '0 1rem'}}></span> Bolsista: <span style={{margin: '0 13.5rem'}}></span> Matrícula:
+            <span style={{ margin: '0 1rem' }}></span> Bolsista:
+            <span style={{ fontFamily: 'Roboto'}}> {data.student}</span>
+            <span style={{ margin: '0 8.6rem' }}></span> Matrícula:
+            <span style={{ fontFamily: 'Roboto'}}> {data.matriculation}</span>
           </div>
 
           <div className="header-infos-field">
-            <span style={{margin: '0 1rem'}}></span>Orientador: <span style={{margin: '0 13rem'}}></span> Setor:
+            <span style={{ margin: '0 1rem' }}></span>Orientador:
+            <span style={{ fontFamily: 'Roboto'}}> {data.advisor}</span>
+            <span style={{ margin: '0 7rem' }}></span> Setor:
+            <span style={{ fontFamily: 'Roboto'}}> {data.sector}</span>
           </div>
         </div>
       </div>
 
-      <table id="report-table">
-        {/* titles */}
+      <table id="template-table">
         <thead>
           <tr>
             <th rowSpan="2">Dia</th>
-            <th colSpan="2" style={{ fontWeight: 'normal', fontFamily: 'Roboto Bold, Arial, sans-serif' }}>Manhã</th>
+            <th colSpan="2" style={{ fontWeight: 'normal', fontFamily: 'Roboto Bold, Arial, sans-serif' }}>
+              Manhã
+            </th>
             <th colSpan="2">Tarde</th>
             <th colSpan="2">Noite</th>
             <th rowSpan="2">Horas por dia</th>
@@ -77,22 +65,28 @@ const MyCustomComponent = () => {
         </thead>
         <tbody>
           {/* values */}
-          {frequency.map((element, index) => {
+          {data.frequency.map((element, index) => {
             return (
               <tr key={index}>
-                {/* dia do mês */}
-                <td><b>{element.day}</b></td>
+                <td>
+                  <b>{element.day}</b>
+                </td>
+
                 {/* manhã */}
-                <td>12:26</td>
-                <td>12:26</td>
+                <td>{element.manha.entrada}</td>
+                <td>{element.manha.saida}</td>
+
                 {/* tarde */}
-                <td>12:26</td>
-                <td>12:26</td>
+                <td>{element.tarde.entrada}</td>
+                <td>{element.tarde.entrada}</td>
+
                 {/* noite */}
-                <td>12:26</td>
-                <td>12:26</td>
+                <td>{element.noite.entrada}</td>
+                <td>{element.noite.entrada}</td>
+
                 {/* total de horas */}
                 <td>{element.totalHoras}</td>
+
                 {/* assinatura */}
                 <td>{element.assinatura}</td>
               </tr>
@@ -102,6 +96,8 @@ const MyCustomComponent = () => {
             <td style={{ border: '0' }} colSpan="4"></td>
             <td colSpan="4">
               <span style={{ fontFamily: 'Roboto Bold, Arial, sans-serif' }}>Total de horas no mês:</span>
+
+              <span style={{ fontFamily: 'Roboto' }}> {data.monthlyHours} </span>
             </td>
           </tr>
         </tbody>
@@ -127,4 +123,8 @@ const MyCustomComponent = () => {
   );
 };
 
-export default MyCustomComponent;
+Template.propTypes = {
+  data: PropTypes.object
+};
+
+export default Template;

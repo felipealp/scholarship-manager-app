@@ -1,7 +1,6 @@
 @font-face {
   font-family: 'Roboto';
   src: url('./Roboto-Light.ttf') format('truetype');
-  /* Adicione outras variações da fonte, se necessário */
 }
 
 @font-face {
@@ -9,18 +8,15 @@
   src: url('./Roboto-Bold.ttf') format('truetype');
 }
 
-#report-table {
+#template-table {
   border-collapse: collapse;
   border-spacing: 0;
-  // width: 100%;
   margin-top: 3rem;
   margin: 0 2rem;
   width: '100px';
-  // style={{ fontSize:'8px', width: '550px'}}
 }
 
 th {
-  // background: #90caf9;
   padding: 0 1rem;
 }
 
@@ -36,9 +32,7 @@ th {
 
   .header-infos {
     margin: 1rem 0;
-    // background: red;
-    // display: flex;
-    
+
     .header-infos-field {
       font-family: 'Roboto Bold';
       text-align: left;
@@ -70,9 +64,8 @@ th {
   justify-content: center;
 }
 
-/* Estilo para cada coluna */
 .coluna {
   padding: 0 0.5rem 2.5rem;
   border: 1px solid black;
-  flex-basis: 44%; /* Largura de cada coluna */
+  flex-basis: 44%;
 }
