@@ -1,38 +1,76 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 // material-ui
-import { Grid } from '@mui/material';
+import { Grid, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
+import { gridSpacing } from 'store/constant';
+import { Button } from '@mui/material';
+import { IconClipboardList } from '@tabler/icons';
 
 // project imports
 import MainCard from 'components/cards';
 import Table from './table';
-import { gridSpacing } from 'store/constant';
 import SkeletonEarningCard from 'components/Skeleton';
 import Report from './report';
+import { monthNumberToName } from 'utils/dates';
+
+// models
+import { getFrequency, postFrequency } from 'models/frequency';
 
 const Frequency = () => {
   const navigate = useNavigate();
-  const [isLoading, setLoading] = useState(true);
+  const { mes } = useParams();
 
+  const [isLoading, setLoading] = useState(true);
   const [month, setMonth] = useState('');
-  const handleMonth = (month) => {
+  const [frequency, setFrequency] = useState([]);
+  const [reportData, setReportData] = useState({});
+
+  const hangleChangeMonth = (month) => {
     setLoading(true);
     setMonth(month);
     navigate('/frequencia/' + month);
   };
 
-  const hanbleGenerateReport = () => {
-    console.log(frequency);
-    generatePDF();
+  // set time in frequency
+  const handleTime = (event, index, turno, movimentacao) => {
+    const frequencyData = frequency;
+    frequencyData[index][turno][movimentacao] = event.target.value;
+
+    // calculate total hours
+    // frequencyData[index].totalHoras = 5;
+
+    setFrequency(frequencyData);
+
+    setReportData({
+      ...reportData,
+      frequency
+    });
   };
 
   useEffect(() => {
-    console.log(isLoading);
+    const currentMonth = monthNumberToName(new Date().getMonth() + 1);
+    setMonth(mes || currentMonth);
+
+    const frequencyRequest = getFrequency(month);
+    setFrequency(frequencyRequest);
+  }, [mes, month]);
+
+  useEffect(() => {
+    setReportData({
+      student: 'Nome Aluno',
+      advisor: 'Nome Orientador',
+      month: 'Janeiro',
+      year: '2023',
+      monthlyHours: 0,
+      frequency
+    });
+  }, [frequency]);
+
+  useEffect(() => {
     setTimeout(function () {
       setLoading(false);
-    }, 2000);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, 500);
   }, [month]);
 
   if (isLoading) {
@@ -42,32 +80,49 @@ const Frequency = () => {
   return (
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
-
-      <img src="src/assets/images/brasao.png" alt="Brasão" />
         <MainCard title="Frequência">
-          <div>
-            <label htmlFor="month">Mês: </label>
-            <select value={month} onChange={(e) => handleMonth(e.target.value)}>
-              <option value="janeiro">janeiro</option>
-              <option value="fevereiro">fevereiro</option>
-              <option value="março">março</option>
-              <option value="abril">abril</option>
-              <option value="maio">maio</option>
-              <option value="junho">junho</option>
-              <option value="julho">julho</option>
-              <option value="agosto">agosto</option>
-              <option value="setembro">setembro</option>
-              <option value="outrubro">outrubro</option>
-              <option value="novembro">novembro</option>
-              <option value="dezembro">dezembro</option>
-            </select>
+          <div style={{ display: 'flex', justifyContent: 'space-between', margin: '1rem 0' }}>
+            <div style={{ width: '65%' }}>
+              <FormControl style={{ height: '40px', width: '100%' }}>
+                <InputLabel id="month-label">Mês</InputLabel>
+                <Select
+                  labelId="month-label"
+                  id="month"
+                  label="Mês"
+                  value={month}
+                  onChange={(e) => hangleChangeMonth(e.target.value)}
+                  style={{ minWidth: '150px' }}
+                >
+                  <MenuItem value="janeiro">Janeiro</MenuItem>
+                  <MenuItem value="fevereiro">Fevereiro</MenuItem>
+                  <MenuItem value="março">Março</MenuItem>
+                  <MenuItem value="abril">Abril</MenuItem>
+                  <MenuItem value="maio">Maio</MenuItem>
+                  <MenuItem value="junho">Junho</MenuItem>
+                  <MenuItem value="julho">Julho</MenuItem>
+                  <MenuItem value="agosto">Agosto</MenuItem>
+                  <MenuItem value="setembro">Setembro</MenuItem>
+                  <MenuItem value="outubro">Outubro</MenuItem>
+                  <MenuItem value="novembro">Novembro</MenuItem>
+                  <MenuItem value="dezembro">Dezembro</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
 
-            <button onClick={() => console.log(frequency)}>Salvar</button>
-            <button onClick={hanbleGenerateReport}>Imprimir Folha</button>
-            <Report />
+            <div>
+              <Button
+                variant="contained"
+                style={{ margin: '0 0.5rem', backgroundColor: '#1e88e5', color: 'white', height: '50px' }}
+                onClick={() => postFrequency({ month, frequency })}
+                startIcon={<IconClipboardList />}
+              >
+                Salvar Horários
+              </Button>
+            </div>
+            <Report data={reportData} />
           </div>
 
-          <Table />
+          <Table frequency={frequency} handleTime={handleTime} />
         </MainCard>
       </Grid>
     </Grid>

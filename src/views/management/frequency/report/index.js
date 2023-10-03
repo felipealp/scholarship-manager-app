@@ -31,7 +31,7 @@ const Report = ({ data }) => {
     <div>
       <Button
         variant="contained"
-        style={{ margin: '1rem 1.5rem', backgroundColor: '#1e88e5', color: 'white', height: '50px' }}
+        style={{ backgroundColor: '#1e88e5', color: 'white', height: '50px' }}
         onClick={exportPDF}
         startIcon={<IconClipboardList />}
       >

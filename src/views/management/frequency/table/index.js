@@ -1,38 +1,10 @@
-// material-ui
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-
-import { getFrequency } from 'models/frequency';
+import PropTypes from 'prop-types';
 
 import './style.scss';
 
-// project imports
-
-const Table = () => {
-  const { mes } = useParams();
-
-  const [month, setMonth] = useState('');
-  const [frequency, setFrequency] = useState([]);
-
-  useEffect(() => {
-    const date = new Date();
-    const currentMonth = date.getMonth() + 1;
-    setMonth(mes || currentMonth);
-    const frequencyRequest = getFrequency(month);
-    setFrequency(frequencyRequest);
-  }, [mes, month]);
-
-  const handleTime = (event, index, turno, movimentacao) => {
-    // 👇 Get input value from "event"
-    console.log('????', index, event);
-    const altera = frequency;
-    altera[index][turno][movimentacao] = event.target.value;
-    setFrequency(altera);
-    // setMessage(event.target.value);
-  };
-
+const Table = ({ frequency, handleTime }) => {
   return (
-    <table id="my-table">
+    <table id="frequency-table">
       {/* titles */}
       <thead>
         <tr>
@@ -90,6 +62,11 @@ const Table = () => {
       </tbody>
     </table>
   );
+};
+
+Table.propTypes = {
+  frequency: PropTypes.array,
+  handleTime: PropTypes.func
 };
 
 export default Table;
