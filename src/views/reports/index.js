@@ -7,12 +7,11 @@ import MainCard from 'components/cards';
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const SamplePage = () => (
-  <MainCard title="Sample Card">
+  <MainCard title="Página em Construção">
     <Typography variant="body2">
-      Lorem ipsum dolor sit amen, consenter nipissing eli, sed do elusion tempos incident ut laborers et doolie magna alissa. Ut enif ad
-      minim venice, quin nostrum exercitation illampu laborings nisi ut liquid ex ea commons construal. Duos aube grue dolor in reprehended
-      in voltage veil esse colum doolie eu fujian bulla parian. Exceptive sin ocean cuspidate non president, sunk in culpa qui officiate
-      descent molls anim id est labours.
+      Agradecemos por sua visita! Estamos trabalhando arduamente para aprimorar sua experiência em nosso site. Nossa página está passando
+      por uma fase de construção e renovação, onde estamos implementando novos recursos e conteúdo relevante que serão de grande valor para
+      você.
     </Typography>
   </MainCard>
 );

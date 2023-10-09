@@ -39,4 +39,45 @@ const getStringDate = (date) => {
   return `${year}-${month}-${day}`;
 };
 
-export { monthNameToNumber, monthNumberToName, getStringDate };
+function calcularHoras(entrada, saida) {
+  const entradaParts = entrada.split(':');
+  const saidaParts = saida.split(':');
+  const entradaDate = new Date(0, 0, 0, entradaParts[0], entradaParts[1]);
+  const saidaDate = new Date(0, 0, 0, saidaParts[0], saidaParts[1]);
+  const diffMillis = saidaDate - entradaDate;
+  return diffMillis / 1000 / 3600;
+}
+
+function calculateTotalHours(day) {
+  const manhaEntrada = day.manha.entrada;
+  const manhaSaida = day.manha.saida;
+  const tardeEntrada = day.tarde.entrada;
+  const tardeSaida = day.tarde.saida;
+  const noiteEntrada = day.noite.entrada;
+  const noiteSaida = day.noite.saida;
+
+  let totalHoras = 0;
+
+  if ((manhaEntrada && manhaSaida) || (tardeEntrada && tardeSaida) || (noiteEntrada && noiteSaida)) {
+    if (manhaEntrada && manhaSaida) {
+      const manhaHoras = calcularHoras(manhaEntrada, manhaSaida);
+      totalHoras += manhaHoras;
+    }
+
+    if (tardeEntrada && tardeSaida) {
+      const tardeHoras = calcularHoras(tardeEntrada, tardeSaida);
+      totalHoras += tardeHoras;
+    }
+
+    if (noiteEntrada && noiteSaida) {
+      const noiteHoras = calcularHoras(noiteEntrada, noiteSaida);
+      totalHoras += noiteHoras;
+    }
+
+    day.totalHoras = totalHoras;
+  }
+
+  return totalHoras;
+}
+
+export { monthNameToNumber, monthNumberToName, getStringDate, calculateTotalHours };

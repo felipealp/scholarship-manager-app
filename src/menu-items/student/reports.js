@@ -16,26 +16,22 @@ const other = {
       id: 'sample-page',
       title: 'Lista de Frequências',
       type: 'item',
-      url: '/reports',
-      icon: icons.IconListSearch,
-      breadcrumbs: false
+      url: '/frequencias',
+      icon: icons.IconListSearch
     },
     {
-      id: 'documentation',
+      id: 'plano-trabalho',
       title: 'Plano de Trabalho',
       type: 'item',
-      url: 'https://codedthemes.gitbook.io/berry/',
-      icon: icons.IconLayoutGridAdd,
-      external: true,
-      target: true
+      url: '/plano-trabalho',
+      icon: icons.IconLayoutGridAdd
     },
     {
       id: 'sample-page3',
       title: 'Relatório Semestral',
       type: 'item',
-      url: '/reports',
-      icon: icons.IconCheckupList,
-      breadcrumbs: false
+      url: '/relatorios',
+      icon: icons.IconCheckupList
     }
   ]
 };

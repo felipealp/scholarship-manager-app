@@ -17,8 +17,7 @@ const dashboard = {
       title: 'Dados da Bolsa',
       type: 'item',
       url: '/pesquisa',
-      icon: icons.IconSchool,
-      breadcrumbs: false
+      icon: icons.IconSchool
     },
     {
       id: 'frequencia',

@@ -137,7 +137,19 @@ const MainRoutes = {
       ]
     },
     {
+      path: 'pesquisa',
+      element: <SamplePage />
+    },
+    {
+      path: 'frequencias',
+      element: <SamplePage />
+    },
+    {
       path: 'relatorios',
+      element: <SamplePage />
+    },
+    {
+      path: 'plano-trabalho',
       element: <SamplePage />
     }
   ]

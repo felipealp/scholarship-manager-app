@@ -29,18 +29,32 @@ function generateMonthlySchedule(month) {
 }
 
 function generateMonthlyScheduleByMonthName(monthName) {
-  const monthNumber = monthNameToNumber(monthName);
-  return generateMonthlySchedule(monthNumber);
+  if (monthName) {
+    const monthNumber = monthNameToNumber(monthName);
+    return generateMonthlySchedule(monthNumber);
+  }
+
+  return {};
 }
 
 const getFrequency = (month) => {
+  console.log(month);
   console.log('reuisição de frequencia para o mÊs de ', month);
-  const monthName = 'agosto';
-  return generateMonthlyScheduleByMonthName(monthName);
+  // const monthName = 'agosto';
+
+  const data = localStorage.getItem(month);
+
+  if (data) {
+    console.log(JSON.parse(data))
+    return JSON.parse(data).frequency;
+  }
+
+  return generateMonthlyScheduleByMonthName(month);
 };
 
 const postFrequency = (data) => {
   console.log('salvar frequencia ', data);
+  localStorage.setItem(data.month, JSON.stringify(data));
 };
 
 export { getFrequency, postFrequency };

@@ -12,7 +12,7 @@ import MainCard from 'components/cards';
 import Table from './table';
 import SkeletonEarningCard from 'components/Skeleton';
 import Report from './report';
-import { monthNumberToName } from 'utils/dates';
+import { monthNumberToName, calculateTotalHours } from 'utils/dates';
 
 // models
 import { getFrequency, postFrequency } from 'models/frequency';
@@ -38,7 +38,9 @@ const Frequency = () => {
     frequencyData[index][turno][movimentacao] = event.target.value;
 
     // calculate total hours
-    // frequencyData[index].totalHoras = 5;
+    const hours = calculateTotalHours(frequencyData[index]);
+    console.log('calculo de horas: ', hours);
+    frequencyData[index].totalHoras = hours;
 
     setFrequency(frequencyData);
 
