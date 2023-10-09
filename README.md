@@ -1,34 +1,34 @@
 <h1 align="center">scholarship manager app</h1>
 
-**A React project to manager scholarship.**
+**a React project to manager scholarship.**
 
 ## ⚙️ Running
 
-To run this application, you'll need to have installed on your computer:
+to run this application, you'll need to have installed on your computer:
 
 - [Git](https://git-scm.com)
 -  [Node.js](https://nodejs.org/en/)
 
 ```bash
-# Clone repository
+# clone repository
 $ git clone https://github.com/felipealp/scholarship-manager-app
 
-# Access the project path
+# access the project path
 $ cd scholarship-manager-app
 
-# Install the dependencies
-$ yarn install
+# install the dependencies
+$ npm install
 
-# Runs the app in the development mode
-$ yarn start
+# runs the app in the development mode
+$ npm start
 
-# Ready
-# Open http://localhost:3000 to view it in the browser
+# ready
+# open http://localhost:3000 to view it in the browser
 ```
 
 ## 💻 Technologies
 
-This project was built with the following technologies:
+this project was built with the following technologies:
 
 - [React](https://pt-br.reactjs.org/)
 - [React Router Dom](https://github.com/ReactTraining/react-router)
@@ -36,6 +36,6 @@ This project was built with the following technologies:
 
 ## 👨‍💻 Author
 
-Made with ❤ by Luiz Felipe.
-Contact me at [likedin](https://www.linkedin.com/in/felipealp).
+made with ❤ by Luiz Felipe.
+contact me at [likedin](https://www.linkedin.com/in/felipealp).
 💛👋
