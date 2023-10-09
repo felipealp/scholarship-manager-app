@@ -60,9 +60,9 @@ const Frequency = () => {
 
   useEffect(() => {
     setReportData({
-      student: 'Nome Aluno',
-      advisor: 'Nome Orientador',
-      month: 'Janeiro',
+      student: '',
+      advisor: '',
+      month: '',
       year: '2023',
       monthlyHours: 0,
       frequency

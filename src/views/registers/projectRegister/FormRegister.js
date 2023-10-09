@@ -35,7 +35,7 @@ import SkeletonEarningCard from 'components/Skeleton';
 
 // models
 import { getAll as getAllCampus } from 'models/campus';
-import { getAll as getAllCoordinators } from 'models/coordinator';
+import { getAdvisors as getAllAdvisors } from 'models/advisor';
 import { getRegister, postRegister } from 'models/project';
 
 const FormRegister = ({ ...others }) => {
@@ -47,7 +47,7 @@ const FormRegister = ({ ...others }) => {
   const [success, setSuccess] = useState(false);
   const [campus, setCampus] = useState([]);
   const [project, setProject] = useState({});
-  const [coordinators, setCoordinators] = useState([]);
+  const [advisors, setadvisors] = useState([]);
 
   // dates
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
@@ -61,9 +61,9 @@ const FormRegister = ({ ...others }) => {
     setCampus(data);
   };
 
-  const requestGetCoordinators = async () => {
-    const data = await getAllCoordinators();
-    setCoordinators(data);
+  const requestGetadvisors = async () => {
+    const data = await getAllAdvisors();
+    setadvisors(data);
   };
 
   const requestProjectRegister = async () => {
@@ -84,7 +84,7 @@ const FormRegister = ({ ...others }) => {
 
   useEffect(() => {
     requestGetCampus();
-    requestGetCoordinators();
+    requestGetadvisors();
     requestProjectRegister();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -93,7 +93,7 @@ const FormRegister = ({ ...others }) => {
     name: Yup.string().max(255).required('O nome é obrigatório'),
     description: Yup.string().max(255).required('A descrição é obrigatória'),
     campus: Yup.string().max(255).required('O campus é obrigatório'),
-    coordinator: Yup.string().max(255).required('O coordenador é obrigatório')
+    advisor: Yup.string().max(255).required('O coordenador é obrigatório')
   });
 
   if (isLoading) {
@@ -108,7 +108,7 @@ const FormRegister = ({ ...others }) => {
           name: project.nome || '',
           description: project.descricao || '',
           campus: project.campus || '',
-          coordinator: project.coordenador || '',
+          advisor: project.orientador || '',
           submit: null
         }}
         validationSchema={validationSchema}
@@ -222,25 +222,25 @@ const FormRegister = ({ ...others }) => {
               )}
             </FormControl>
 
-            <FormControl fullWidth error={Boolean(touched.coordinator && errors.coordinator)} style={{ margin: '8px 0' }}>
-              <InputLabel id="demo-simple-select-label">Coordenador</InputLabel>
+            <FormControl fullWidth error={Boolean(touched.advisor && errors.advisor)} style={{ margin: '8px 0' }}>
+              <InputLabel id="demo-simple-select-label">Orientador</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                name="coordinator"
-                value={values.coordinator}
-                label="Coordenador"
+                name="advisor"
+                value={values.advisor}
+                label="Orientador"
                 onChange={handleChange}
               >
-                {coordinators.map((coordinatorsItem) => (
-                  <MenuItem key={coordinatorsItem.id} value={coordinatorsItem.id}>
-                    {coordinatorsItem.user.name}
+                {advisors.map((advisorsItem) => (
+                  <MenuItem key={advisorsItem.id} value={advisorsItem.id}>
+                    {advisorsItem.user.name}
                   </MenuItem>
                 ))}
               </Select>
-              {touched.coordinator && errors.coordinator && (
+              {touched.advisor && errors.advisor && (
                 <FormHelperText error id="standard-weight-helper-text--register">
-                  {errors.coordinator}
+                  {errors.advisor}
                 </FormHelperText>
               )}
             </FormControl>

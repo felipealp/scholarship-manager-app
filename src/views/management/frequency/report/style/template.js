@@ -36,7 +36,7 @@ const Template = ({ data }) => {
           <div className="header-infos-field">
             <span style={{ margin: '0 1rem' }}></span>Orientador:
             <span style={{ fontFamily: 'Roboto'}}> {data.advisor}</span>
-            <span style={{ margin: '0 7rem' }}></span> Setor:
+            <span style={{ margin: '0 8.1rem' }}></span> Setor:
             <span style={{ fontFamily: 'Roboto'}}> {data.sector}</span>
           </div>
         </div>
@@ -85,7 +85,7 @@ const Template = ({ data }) => {
                 <td>{element.noite.entrada}</td>
 
                 {/* total de horas */}
-                <td>{element.totalHoras}</td>
+                <td>{Number(element.totalHoras).toFixed(2)} horas </td>
 
                 {/* assinatura */}
                 <td>{element.assinatura}</td>
@@ -97,7 +97,7 @@ const Template = ({ data }) => {
             <td colSpan="4">
               <span style={{ fontFamily: 'Roboto Bold, Arial, sans-serif' }}>Total de horas no mês:</span>
 
-              <span style={{ fontFamily: 'Roboto' }}> {data.monthlyHours} </span>
+              <span style={{ fontFamily: 'Roboto' }}> {Number(data.monthlyHours).toFixed(2)} horas </span>
             </td>
           </tr>
         </tbody>
