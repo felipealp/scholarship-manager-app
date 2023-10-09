@@ -1,0 +1,37 @@
+.frequency-content {
+  background: #fff;
+  padding: 1rem;
+}
+
+#frequency-table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top : 3rem;
+  
+
+  th {
+    // background: #90caf9;
+    padding: 0.5rem 0;
+  }
+
+  td, th {
+    border: 1px solid #a5b0c0 !important;
+    text-align: left;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  input {
+    width: 100%;
+    padding: 8px;
+    border: 0;
+  }
+
+  input[type="time"] {
+    content: "\25b6";
+    color: #1e88e5;
+    font-size: 16px;
+    margin-right: 5px; 
+  }
+}
